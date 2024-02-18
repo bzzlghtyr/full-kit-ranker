@@ -1,0 +1,575 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Major League Soccer Kit Ranker</title>
+<style>
+li {
+	font-size:10px;
+}
+</style>
+<script type="text/javascript">
+<!--
+var namMember = new Array(
+"<img src=kits/2024/png/atx1.png> <b>Austin FC</b><br><sub><sub><sub><i>The Armadillo Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/atl1.png> <b>Atlanta United</b><br><sub><sub><sub><i>The Resurgens Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/chi1.png> <b>Chicago Fire FC</b><br><sub><sub><sub><i>Return to Red</i></sub></sub></sub>",
+"<img src=kits/2024/png/cin1.png> <b>FC Cincinnati</b><br><sub><sub><sub><i>The Canvas Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/clb1.png> <b>Columbus Crew</b><br><sub><sub><sub><i>The Home Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/clt1.png> <b>Charlotte FC</b><br><sub><sub><sub><i>The Carolina Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/col1.png> <b>Colorado Rapids</b><br><sub><sub><sub><i>One Flag Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/dal1.png> <b>FC Dallas</b><br><sub><sub><sub><i>Afterburner Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/dcu1.png> <b>DC United</b><br><sub><sub><sub><i>The Icon Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/hou1.png> <b>Houston Dynamo FC</b><br><sub><sub><sub><i>Still Holdin'</i></sub></sub></sub>",
+"<img src=kits/2024/png/lafc1.png> <b>Los Angeles FC</b><br><sub><sub><sub><i>\"Back in Black\"</i></sub></sub></sub>",
+"<img src=kits/2024/png/lag1.png> <b>LA Galaxy</b><br><sub><sub><sub><i>Angeleno Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/mia1.png> <b>Inter Miami CF</b><br><sub><sub><sub><i>2getherness Jersey</i></sub></sub></sub>",
+"<img src=kits/2024/png/min1.png> <b>Minnesota United</b><br><sub><sub><sub><i>Starry Night Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/mtl1.png> <b>CF Montreal</b><br><sub><sub><sub><i>La Main</i></sub></sub></sub>",
+"<img src=kits/2024/png/ner1.png> <b>New England Revolution</b><br><sub><sub><sub><i>Boston Tea Party</i></sub></sub></sub>",
+"<img src=kits/2024/png/nsh1.png> <b>Nashville SC</b><br><sub><sub><sub><i>The 615 Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/nycfc1.png> <b>New York City FC</b><br><sub><sub><sub><i>24/7 Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/nyrb1.png> <b>New York Red Bulls</b><br><sub><sub><sub><i>Legacy Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/orl1.png> <b>Orlando City</b><br><sub><sub><sub><i>Legacy Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/phi1.png> <b>Philadelphia Union</b><br><sub><sub><sub><i>XV Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/por1.png> <b>Portland Timbers</b><br><sub><sub><sub><i>Nature Unites Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/rsl1.png> <b>Real Salt Lake</b><br><sub><sub><sub><i>Peak Utah</i></sub></sub></sub>",
+"<img src=kits/2024/png/sea1.png> <b>Seattle Sounders FC</b><br><sub><sub><sub><i>The Anniversary Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/sj1.png> <b>San Jose Earthquakes</b><br><sub><sub><sub><i>The 50 Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/skc1.png> <b>Sporting Kansas City</b><br><sub><sub><sub><i>Diamonds Our Forever</i></sub></sub></sub>",
+"<img src=kits/2024/png/stl1.png> <b>St. Louis CITY SC</b><br><sub><sub><sub><i>The Confluence Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/tor1.png> <b>Toronto FC</b><br><sub><sub><sub><i>GTA Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/van1.png> <b>Vancouver Whitecaps FC</b><br><sub><sub><sub><i>The 50 Jersey</i></sub></sub></sub>"
+);
+
+let semiOne = new Array(
+"<img src=kits/2024/png/atx1.png> <b>Austin FC</b><br><sub><sub><sub><i>The Armadillo Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/atl1.png> <b>Atlanta United</b><br><sub><sub><sub><i>The Placeholder Name Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/chi1.png> <b>Chicago Fire FC</b><br><sub><sub><sub><i>Return to Red</i></sub></sub></sub>",
+"<img src=kits/2024/png/cin1.png> <b>FC Cincinnati</b><br><sub><sub><sub><i>The Canvas Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/clb1.png> <b>Columbus Crew</b><br><sub><sub><sub><i>The Home Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/clt1.png> <b>Charlotte FC</b><br><sub><sub><sub><i>The Carolina Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/col1.png> <b>Colorado Rapids</b><br><sub><sub><sub><i>One Flag Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/dal1.png> <b>FC Dallas</b><br><sub><sub><sub><i>Afterburner Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/dcu1.png> <b>DC United</b><br><sub><sub><sub><i>The Icon Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/hou1.png> <b>Houston Dynamo FC</b><br><sub><sub><sub><i>Still Holdin'</i></sub></sub></sub>",
+"<img src=kits/2024/png/lafc1.png> <b>Los Angeles FC</b><br><sub><sub><sub><i>\"Back in Black\"</i></sub></sub></sub>",
+"<img src=kits/2024/png/lag1.png> <b>LA Galaxy</b><br><sub><sub><sub><i>Angeleno Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/mia1.png> <b>Inter Miami CF</b><br><sub><sub><sub><i>2getherness Jersey</i></sub></sub></sub>",
+"<img src=kits/2024/png/min1.png> <b>Minnesota United</b><br><sub><sub><sub><i>Starry Night Kit</i></sub></sub></sub>"
+);
+
+let semiTwo = new Array(
+"<img src=kits/2024/png/mtl1.png> <b>CF Montreal</b><br><sub><sub><sub><i>La Main</i></sub></sub></sub>",
+"<img src=kits/2024/png/ner1.png> <b>New England Revolution</b><br><sub><sub><sub><i>Boston Tea Party</i></sub></sub></sub>",
+"<img src=kits/2024/png/nsh1.png> <b>Nashville SC</b><br><sub><sub><sub><i>The 615 Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/nycfc1.png> <b>New York City FC</b><br><sub><sub><sub><i>24/7 Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/nyrb1.png> <b>New York Red Bulls</b><br><sub><sub><sub><i>Legacy Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/orl1.png> <b>Orlando City</b><br><sub><sub><sub><i>Legacy Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/phi1.png> <b>Philadelphia Union</b><br><sub><sub><sub><i>XV Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/por1.png> <b>Portland Timbers</b><br><sub><sub><sub><i>Nature Unites Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/rsl1.png> <b>Real Salt Lake</b><br><sub><sub><sub><i>Peak Utah</i></sub></sub></sub>",
+"<img src=kits/2024/png/sea1.png> <b>Seattle Sounders FC</b><br><sub><sub><sub><i>The Anniversary Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/sj1.png> <b>San Jose Earthquakes</b><br><sub><sub><sub><i>The 50 Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/skc1.png> <b>Sporting Kansas City</b><br><sub><sub><sub><i>Diamonds Our Forever</i></sub></sub></sub>",
+"<img src=kits/2024/png/stl1.png> <b>St. Louis CITY SC</b><br><sub><sub><sub><i>The Confluence Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/tor1.png> <b>Toronto FC</b><br><sub><sub><sub><i>GTA Kit</i></sub></sub></sub>",
+"<img src=kits/2024/png/van1.png> <b>Vancouver Whitecaps FC</b><br><sub><sub><sub><i>The 50 Jersey</i></sub></sub></sub>"
+);
+
+//*********************************************************
+
+var lstMember = new Array();
+var parent = new Array();
+var equal = new Array();
+var rec = new Array();
+var cmp1,cmp2;
+var head1,head2;
+var nrec;
+
+var numQuestion;
+var totalSize;
+var finishSize;
+var finishKit;
+
+let showQualifiers = false;
+let showDiscord = false;
+
+//The initialization of the variable+++++++++++++++++++++++++++++++++++++++++++++
+function initList(){
+	var n = 0;
+	var mid;
+	var i;
+
+	//The sequence that you should sort
+	lstMember[n] = new Array();
+	for (i=0; i<namMember.length; i++) {
+		lstMember[n][i] = i;
+	}
+	parent[n] = -1;
+	totalSize = 0;
+	n++;
+
+	for (i=0; i<lstMember.length; i++) {
+		//And element divides it in two/more than two
+		//Increase divided sequence of last in first member
+		if(lstMember[i].length>=2) {
+			mid = Math.ceil(lstMember[i].length/2);
+			lstMember[n] = new Array();
+			lstMember[n] = lstMember[i].slice(0,mid);
+			totalSize += lstMember[n].length;
+			parent[n] = i;
+			n++;
+			lstMember[n] = new Array();
+			lstMember[n] = lstMember[i].slice(mid,lstMember[i].length);
+			totalSize += lstMember[n].length;
+			parent[n] = i;
+			n++;
+		}
+	}
+
+	//Preserve this sequence
+	for (i=0; i<namMember.length; i++) {
+		rec[i] = 0;
+	}
+	nrec = 0;
+
+	//List that keeps your results
+	//Value of link initial
+	// Value of link initial
+	for (i=0; i<=namMember.length; i++) {
+		equal[i] = -1;
+	}
+
+	cmp1 = lstMember.length-2;
+	cmp2 = lstMember.length-1;
+	head1 = 0;
+	head2 = 0;
+	numQuestion = 1;
+	finishSize = 0;
+	finishKit = 0;
+}
+
+
+function sortList(kit){
+	var i;
+	var str;
+
+	//rec preservation
+	if (kit<0) {
+		rec[nrec] = lstMember[cmp1][head1];
+		head1++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else if (kit>0) {
+		rec[nrec] = lstMember[cmp2][head2];
+		head2++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else {
+		rec[nrec] = lstMember[cmp1][head1];
+		head1++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+		equal[rec[nrec-1]] = lstMember[cmp2][head2];
+		rec[nrec] = lstMember[cmp2][head2];
+		head2++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+
+	//Processing after finishing with one list
+	if (head1<lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+		//List the remainder of cmp2 copies, list cmp1 copies when finished scanning
+		while (head1<lstMember[cmp1].length){
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else if (head1==lstMember[cmp1].length && head2<lstMember[cmp2].length) {
+		//List the remainder of cmp1 copies, list cmp2 copies when finished scanning
+		while (head2<lstMember[cmp2].length){
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+
+	//When it arrives at the end of both lists
+	//Update a pro list
+	if (head1==lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+		for (i=0; i<lstMember[cmp1].length+lstMember[cmp2].length; i++) {
+			lstMember[parent[cmp1]][i] = rec[i];
+		}
+		lstMember.pop();
+		lstMember.pop();
+		cmp1 = cmp1-2;
+		cmp2 = cmp2-2;
+		head1 = 0;
+		head2 = 0;
+
+		//Initialize the rec before performing the new comparison
+		if (head1==0 && head2==0) {
+			for (i=0; i<namMember.length; i++) {
+				rec[i] = 0;
+			}
+			nrec = 0;
+		}
+	}
+
+	if (cmp1<0) {
+		str = "Battle No."+(numQuestion-1)+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+		document.getElementById("battleNumber").innerHTML = str;
+
+		showResult();
+		finishKit = 1;
+	}
+	else {
+		showImage();
+	}
+}
+
+//The results
+
+function showResult() {
+    // Preprocess namMember to replace /png/ with /png/150x/
+    var processedNamMember = namMember.map(item => item.replace(/\/png\//g, "/png/150x/").replace(/<sub>/g, ""));
+
+    var ranking = 1;
+    var sameRank = 1;
+    var str = "";
+    var strx = "!submit 2023 ";
+    var i;
+
+    // Define a gradient of colors from green to red covering all 29 ranks
+    var colors = ["#00ff57", "#3ef846", "#56f034", "#67e91d", "#75e200", "#80da00", "#89d300", "#91cb00", "#99c300", "#9fbc00",
+                  "#a4b400", "#a9ac00", "#aea400", "#b19c00", "#b49400", "#b78c00", "#b98400", "#bb7b00", "#bc7300", "#bd6a00",
+                  "#bd6200", "#bd5900", "#bc5000", "#bb4700", "#ba3d00", "#b83300", "#b52700", "#b21a00", "#af0404"];
+
+    str += "<table style=\"width:200px; font-size:16px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #00025d; border-collapse:collapse; background-color:#9fc5e8;\" align=\"center\">";
+    str += "<tr><td style=\"color:#9fc5e8; text-align:center;\">Results<\/td><\/tr>";
+
+    for (i = 0; i < processedNamMember.length; i++) {
+        if (i % 6 === 0) {
+            // Start a new row every 6 members
+            if (i !== 0) {
+                // Close the previous row if this is not the first iteration
+                str += "<\/tr>";
+            }
+            // Start a new row
+            str += "<tr style=\"height: auto;\">";
+        }
+        // Add rank number above each entry and assign color based on rank
+        str += "<td style=\"border:1px solid #00025d; padding-left:5px; background-color:" + colors[ranking-1] + "; font-size: 12px;\">" + ranking + "<br>" + processedNamMember[lstMember[0][i]] + "<\/td>";
+
+        strx += processedNamMember[lstMember[0][i]].replace("<img src=kits/2024/png/", "").replace(/\.png[\s\S]*/, "");
+        strx += ", ";
+        if (i < processedNamMember.length - 1) {
+            if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
+                sameRank++;
+            } else {
+                ranking += sameRank;
+                sameRank = 1;
+            }
+        }
+    }
+    // Close the last row
+    str += "<\/tr><\/table><\/div>";
+    strx = strx.replace(/, \B/, "");
+
+    document.getElementById("resultField").innerHTML = str;
+    document.getElementById("screenieButton").innerHTML = "<br><button onclick=\"screencap()\">Save Image<\/button>";
+
+    let s1results = decideQualifiers(semiOne);
+    let s2results = decideQualifiers(semiTwo);
+    document.getElementById("semi1ResultField").innerHTML = s1results;
+    document.getElementById("semi2ResultField").innerHTML = s2results;
+    document.getElementById("qualifierToggle").style.display = "inherit";
+    document.getElementById("discordToggle").style.display = "inherit";
+    document.getElementById("discordlist").innerHTML = strx;
+}
+
+
+
+
+
+
+
+//Qualifiers
+/*
+function decideQualifiers(semiArray) {
+    let ranking = 1;
+    let str = "";
+    let i;
+    str += "<table style=\"width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #00025d; border-collapse:collapse; background-color:#9fc5e8;\" align=\"center\">";
+    str += "<tr><td style=\"color:#9fc5e8; background-color:#00025d; text-align:center;\">Rank<\/td><td style=\"color:#9fc5e8; background-color:#00025d; text-align:left;\">Entry<\/td><td style=\"color:#9fc5e8; background-color:#00025d; text-align:center;\">Qualifier?</td><\/tr>";
+    for (i = 0; i < namMember.length; i++) {
+        if (semiArray.indexOf(namMember[lstMember[0][i]]) > -1){
+            str += "<tr style=\"height: 75px; background-color:";
+            str += (ranking < 11 ? "green" : "red");
+            str += "\"><td style=\"border:1px solid #00025d; text-align:right; padding-right:5px;\">" + ranking + "<\/td><td style=\"border:1px solid #00025d; padding-left:5px;\">" + namMember[lstMember[0][i]] + "<\/td><td style=\"border:1px solid #00025d;\" align=\"center\">";
+            str += (ranking < 11 ? "Q" : "NQ");
+            str += "</td></tr>";
+            ranking++;
+        }
+    }
+    str += "<\/table><\/div>";
+    return str;
+}
+*/
+
+//Indicates two elements to compare+++++++++++++++++++++++++++++++++++
+function showImage() {
+	var str0 = "Battle No."+numQuestion+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+	var str1 = ""+toNameFace(lstMember[cmp1][head1]);
+	var str2 = ""+toNameFace(lstMember[cmp2][head2]);
+
+	document.getElementById("battleNumber").innerHTML = str0;
+	document.getElementById("leftField").innerHTML = str1;
+	document.getElementById("rightField").innerHTML = str2;
+
+	numQuestion++;
+}
+
+//Convert numeric value into a name (emoticon)+++++++++++++++++++++++++++++++
+function toNameFace(n){
+	var str = namMember[n];
+
+	//Exclude the following comment when adding an emoticon
+	//Warning not to contradict an indext of namMember
+	/*
+	str += "<br>&#9472;&#9472;&#9472;&#9472;<br>";
+	switch(n) {
+		//case -1 Because it is a sample, delete it
+		case -1: str+="&#65288; ｴ&#8704;&#65344;&#65289;";break;
+		default: str+=""+n;
+	}
+	*/
+	return str;
+}
+
+function toggleQualifiers() {
+    showQualifiers = !showQualifiers;
+    if (showQualifiers){
+        document.getElementById("qualifiers").style.display = "inherit";
+    } else {
+        document.getElementById("qualifiers").style.display = "none";
+    }
+}
+
+function toggleDiscordlist() {
+    showDiscord = !showDiscord;
+    if (showDiscord){
+        document.getElementById("discordlist").style.display = "inherit";
+    } else {
+        document.getElementById("discordlist").style.display = "none";
+    }
+}
+//-->
+</script>
+
+
+<!-- hey you don't steal my code >:( ~gerbear -->
+
+<!--dom to img script-->
+<script type="text/javascript" src="FileSaver.min.js"></script>
+<script type="text/javascript" src="dom-to-image.min.js"></script>
+
+  
+<script>
+  function screencap(){
+
+var node = document.getElementById('resultField');
+
+domtoimage.toPng(node)
+    .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+		
+		let showme = window.open('about:blank');
+		setTimeout(function(){
+		  showme.document.write(img.outerHTML);
+		}, 0);
+		
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+    });
+
+}
+</script>
+  
+<!-- end dom to image code-->
+
+<style type="text/css">
+<!--
+/**********************************************************
+
+ When changing the style of the list, please edit here. 
+
+**********************************************************/
+p{
+	font-size: 12px;
+	font-family: sans-serif;
+	text-align: center;
+}
+#discordlist{
+	font-size: 10px;
+	font-family: sans-serif;
+	text-align: center;
+}
+body{
+	background-color: #FFFFFF;
+	color: #000000;
+}
+#mainTable{
+	font-size: 25px;
+	font-family: sans-serif;
+	text-align: center;
+	vertical-align: middle;
+	width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: separate;
+	border-spacing: 10px 5px;
+}
+#resultField, #semi1ResultField, #semi2ResultField{
+	font-size: 36px;
+	font-family: sans-serif;
+	text-align: center;
+}
+#leftField{
+	width: 220px;
+	height: 150px;
+	border: 1px solid #00025d;
+}
+#rightField{
+	width: 25200px;
+	height: 150px;
+	border: 1px solid #00025d;
+}
+.middleField{
+	width: 120px;
+	height: 70px;
+	border: 1px solid #00025d;
+}
+.gerbear{
+	width: 120px;
+	height:70px
+}
+//-->
+<!--
+A{
+  text-decoration : none;
+}
+-->
+<!--
+a:hover{color:#0042ff;}
+-->
+</style>
+<meta http-equiv="x-dns-prefetch-control" content="off"/>
+
+</head>
+
+<body link="#ff0089" vlink="#ff0089" alink="#ff0089">
+<center><!--<img src="escheader2023.png">--></center>
+<table id="mainTable" align="center">
+	<tbody>
+	<tr>
+		<td colspan=3>
+		
+			<p>&nbsp;</p>
+			
+			
+
+			<p><b>Instructions:</b> You will be presented with two 2024 MLS kits. Click the kit you like more and it will be ranked above the other. Do this 60-98 times and you'll see your final ranking at the end. l</p>
+
+			<p>To share your rankings, use the Save Image button that appears beneath your results. This opens the image in a new tab/window.</p>			
+</td>
+	</tr>
+	<tr>
+
+		<td id="battleNumber" colspan="3" style="padding-bottom: 10px;" style="text-align:center;">Battle No.1<br>0% sorted.</td>
+	</tr>
+	<tr>
+		<td id="leftField" onclick="if(finishKit==0)sortList(-1);" rowspan="2" style="text-align:center;"></td>
+		<!-- <td class="middleField" onclick="if(finishKit==0)sortList(0);" style="text-align:center;">
+
+			I Like Both
+		</td> -->
+
+		<td id="rightField" onclick="if(finishKit==0)sortList(1);" rowspan="2"style="text-align:center;"></td>
+	</tr>
+	<!-- <tr>
+		<td class="middleField" onclick="if(finishKit==0)sortList(0);"style="text-align:center;">
+			No Opinion
+		</td>
+
+	</tr> -->
+</tbody></table><br><br>
+<div id="resultField" style="text-align: center;">
+<br><br>
+</div>
+
+
+<script type="text/javascript">
+<!--
+	initList();
+	showImage();
+//-->
+</script>
+
+<div id="screenieButton" style="text-align: center;"></div>
+<!--
+<div id="qualifierToggle" style="display: none;">
+    <p><input type="checkbox" id="showq" name="showq" onclick="toggleQualifiers()">
+    <label for="showq">Show my qualifiers?</label></p>
+</div>
+<div id="qualifiers" style="width: 450px; margin-left: auto; margin-right: auto; overflow: hidden; margin-top: 30px; display: none;">
+    <div id="semi1ResultField" style="text-align: center; float: left;"></div>
+    <div id="semi2ResultField" style="text-align: center; float: right;"></div>
+</div>
+-->
+<!--
+<div id="discordToggle" style="display: none;">
+    <p><input type="checkbox" id="showd" name="showd" onclick="toggleDiscordlist()">
+    <label for="showd">Show Eurovision (un)Official Discord code?</label></p>
+</div>
+<div id="discordlist" style="display: none;">
+</div>
+
+<p><br></p>
+<center><a href="https://info.kitcounter.com/s4kq"><img src="https://s11.kitcounter.com/count2/s4kq/bg_ff0089/txt_9fc5e8/border_00025d/columns_5/maxkits_250/viewers_0/labels_1/pageviews_1/kits_0/percent_0/" alt="Kit Counter" border="0"></a></center>
+<p></p>
+-->
+</body>
+</html>
