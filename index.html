@@ -504,84 +504,35 @@ function screencap() {
             document.body.removeChild(clone);
         });
 }
-// This function is called after capturing the screenshot
 function showModal() {
     if (screenshotUrl) {
-        // Convert dataUrl to Blob for upload
-        fetch(screenshotUrl)
-            .then(res => res.blob())
-            .then(blob => {
-                // Here you can directly upload the blob to your endpoint
-                // For simplicity, the example assumes you're using FormData
-                var formData = new FormData();
-                formData.append("image", blob, "screenshot.png");
+        var modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.zIndex = '9999';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100vw';
+        modal.style.height = '100vh';
+        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        modal.style.display = 'flex';
+        modal.style.justifyContent = 'center';
+        modal.style.alignItems = 'center';
 
-                // Replace with your API Gateway endpoint
-                var endpoint = "https://7cofov9d2l.execute-api.us-east-2.amazonaws.com/prod/upload";
-                
-                // Perform the upload
-                fetch(endpoint, {
-                    method: "POST",
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Assuming your Lambda function returns the URL of the uploaded image
-                    console.log("Upload successful: ", data.imageUrl);
-                    createModalWithImageAndShareButton(data.imageUrl);
-                })
-                .catch(error => {
-                    console.error("Upload failed: ", error);
-                });
-            });
+        var img = new Image();
+        img.src = screenshotUrl;
+        img.style.maxWidth = '90%';
+        img.style.maxHeight = '90%';
+        
+        modal.appendChild(img);
+        modal.addEventListener('click', function () {
+            document.body.removeChild(modal);
+        });
+        
+        document.body.appendChild(modal);
     } else {
         console.error("No screenshot URL found.");
     }
 }
-
-// This function creates the modal with the image and share button, using the uploaded image URL
-function createModalWithImageAndShareButton(imageUrl) {
-    var modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.zIndex = '9999';
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100vw';
-    modal.style.height = '100vh';
-    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    modal.style.display = 'flex';
-    modal.style.justifyContent = 'center';
-    modal.style.alignItems = 'center';
-    modal.style.flexDirection = 'column';
-
-    var img = new Image();
-    img.src = imageUrl;
-    img.style.maxWidth = '90%';
-    img.style.maxHeight = '90%';
-
-    var closeButton = document.createElement('button');
-    closeButton.innerText = 'Close';
-    closeButton.style.marginTop = '20px';
-    closeButton.onclick = function() {
-        document.body.removeChild(modal);
-    };
-
-    var tweetButton = document.createElement('button');
-    tweetButton.innerText = 'Share';
-    tweetButton.style.marginTop = '10px';
-    tweetButton.onclick = function() {
-        var tweetText = "Check out my Major League Soccer kit ranking!";
-        var twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(imageUrl)}`;
-        window.open(twitterUrl, '_blank');
-    };
-
-    modal.appendChild(img);
-    modal.appendChild(closeButton);
-    modal.appendChild(tweetButton);
-    document.body.appendChild(modal);
-}
-
-
 
 
 /*
