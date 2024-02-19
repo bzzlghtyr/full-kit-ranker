@@ -1,7 +1,672 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=0.6,  maximum-scale=0.6">
+
+
+
+<meta charset="UTF-8">
+<title>Major League Soccer Kit Ranker</title>
+    <style>
+        li {
+            font-size: 10px;
+        }
+        
+        img {
+            touch-action: manipulation;
+        }
+    </style>
+
+<script type="text/javascript">
+    <!--
+    // Define an array to hold the URLs of all images
+    var imageUrls = [
+        'kits/2024/png/atx1.png',
+        'kits/2024/png/atl1.png',
+        'kits/2024/png/chi1.png',
+        'kits/2024/png/cin1.png',
+        'kits/2024/png/clb1.png',
+        'kits/2024/png/clt1.png',
+        'kits/2024/png/col1.png',
+        'kits/2024/png/dal1.png',
+        'kits/2024/png/dcu1.png',
+        'kits/2024/png/hou1.png',
+        'kits/2024/png/lafc1.png',
+        'kits/2024/png/lag1.png',
+        'kits/2024/png/mia1.png',
+        'kits/2024/png/min1.png',
+        'kits/2024/png/mtl1.png',
+        'kits/2024/png/ner1.png',
+        'kits/2024/png/nsh1.png',
+        'kits/2024/png/nycfc1.png',
+        'kits/2024/png/nyrb1.png',
+        'kits/2024/png/orl1.png',
+        'kits/2024/png/phi1.png',
+        'kits/2024/png/por1.png',
+        'kits/2024/png/rsl1.png',
+        'kits/2024/png/sea1.png',
+        'kits/2024/png/sj1.png',
+        'kits/2024/png/skc1.png',
+        'kits/2024/png/stl1.png',
+        'kits/2024/png/tor1.png',
+        'kits/2024/png/van1.png'
+
+        // Add all other image URLs here
+    ];
+
+    // Function to prefetch images and load them into cache
+    function prefetchImages() {
+        for (var i = 0; i < imageUrls.length; i++) {
+            var img = new Image();
+            img.src = imageUrls[i];
+        }
+    }
+
+    // Call the function to prefetch images when the page opens
+    window.onload = function() {
+        prefetchImages();
+    };
+    //-->
+</script>
+
+
+
+<script type="text/javascript">
+<!--
+var namMember = new Array(
+"<img src=kits/2024/png/atx1.png> |<b>Austin FC</b>|<i>The Armadillo Kit</i>|",
+"<img src=kits/2024/png/atl1.png> |<b>Atlanta United</b>|<i>The Placeholder Name Kit</i>|",
+"<img src=kits/2024/png/chi1.png> |<b>Chicago Fire FC</b>|<i>Return to Red</i>|",
+
+"<img src=kits/2024/png/cin1.png> |<b>FC Cincinnati</b>|<i>The Canvas Kit</i>|",
+"<img src=kits/2024/png/clb1.png> |<b>Columbus Crew</b>|<i>The Home Kit</i>|",
+"<img src=kits/2024/png/clt1.png> |<b>Charlotte FC</b>|<i>The Carolina Kit</i>|",
+"<img src=kits/2024/png/col1.png> |<b>Colorado Rapids</b>|<i>One Flag Kit</i>|",
+"<img src=kits/2024/png/dal1.png> |<b>FC Dallas</b>|<i>Afterburner Kit</i>|",
+"<img src=kits/2024/png/dcu1.png> |<b>DC United</b>|<i>The Icon Kit</i>|",
+"<img src=kits/2024/png/hou1.png> |<b>Houston Dynamo FC</b>|<i>Still Holdin'</i>|",
+"<img src=kits/2024/png/lafc1.png> |<b>Los Angeles FC</b>|<i>2024 Primary \"Back in Black\"</i>|",
+"<img src=kits/2024/png/lag1.png> |<b>LA Galaxy</b>|<i>Angeleno Kit</i>|",
+"<img src=kits/2024/png/mia1.png> |<b>Inter Miami CF</b>|<i>2getherness Jersey</i>|",
+"<img src=kits/2024/png/min1.png> |<b>Minnesota United</b>|<i>Starry Night Kit</i>|",
+
+"<img src=kits/2024/png/mtl1.png> |<b>CF Montreal</b>|<i>La Main</i>|",
+"<img src=kits/2024/png/ner1.png> |<b>New England Revolution</b>|<i>Boston Tea Party</i>|",
+"<img src=kits/2024/png/nsh1.png> |<b>Nashville SC</b>|<i>The 615 Kit</i>|"
+
+,
+"<img src=kits/2024/png/nycfc1.png> |<b>New York City FC</b>|<i>24/7 Kit</i>|",
+"<img src=kits/2024/png/nyrb1.png> |<b>New York Red Bulls</b>|<i>Legacy Kit</i>|",
+"<img src=kits/2024/png/orl1.png> |<b>Orlando City</b>|<i>Legacy Kit</i>|",
+"<img src=kits/2024/png/phi1.png> |<b>Philadelphia Union</b>|<i>XV Kit</i>|",
+"<img src=kits/2024/png/por1.png> |<b>Portland Timbers</b>|<i>Nature Unites Kit</i>|",
+"<img src=kits/2024/png/rsl1.png> |<b>Real Salt Lake</b>|<i>Peak Utah</i>|",
+"<img src=kits/2024/png/sea1.png> |<b>Seattle Sounders FC</b>|<i>The Anniversary Kit</i>|",
+"<img src=kits/2024/png/sj1.png> |<b>San Jose Earthquakes</b>|<i>The 50 Kit</i>|",
+"<img src=kits/2024/png/skc1.png> |<b>Sporting Kansas City</b>|<i>Diamonds Our Forever</i>|",
+"<img src=kits/2024/png/stl1.png> |<b>St. Louis CITY SC</b>|<i>The Confluence Kit</i>|",
+"<img src=kits/2024/png/tor1.png> |<b>Toronto FC</b>|<i>GTA Kit</i>|",
+"<img src=kits/2024/png/van1.png> |<b>Vancouver Whitecaps FC</b>|<i>The 50 Jersey</i>|"
+
+);
+/*
+let semiOne = new Array(
+"<img src=kits/2024/png/atx1.png> |<b>Austin FC</b>|<i>The Armadillo Kit</i>|",
+"<img src=kits/2024/png/atl1.png> |<b>Atlanta United</b>|<i>The Placeholder Name Kit</i>|",
+"<img src=kits/2024/png/chi1.png> |<b>Chicago Fire FC</b>|<i>Return to Red</i>|"
+
+,
+"<img src=kits/2024/png/cin1.png> |<b>FC Cincinnati</b>|<i>The Canvas Kit</i>|",
+"<img src=kits/2024/png/clb1.png> |<b>Columbus Crew</b>|<i>The Home Kit</i>|",
+"<img src=kits/2024/png/clt1.png> |<b>Charlotte FC</b>|<i>The Carolina Kit</i>|",
+"<img src=kits/2024/png/col1.png> |<b>Colorado Rapids</b>|<i>One Flag Kit</i>|",
+"<img src=kits/2024/png/dal1.png> |<b>FC Dallas</b>|<i>Afterburner Kit</i>|",
+"<img src=kits/2024/png/dcu1.png> |<b>DC United</b>|<i>The Icon Kit</i>|",
+"<img src=kits/2024/png/hou1.png> |<b>Houston Dynamo FC</b>|<i>Still Holdin'</i>|",
+"<img src=kits/2024/png/lafc1.png> |<b>Los Angeles FC</b>|<i>2024 Primary \"Back in Black\"</i>|",
+"<img src=kits/2024/png/lag1.png> |<b>LA Galaxy</b>|<i>Angeleno Kit</i>|",
+"<img src=kits/2024/png/mia1.png> |<b>Inter Miami CF</b>|<i>2getherness Jersey</i>|",
+"<img src=kits/2024/png/min1.png> |<b>Minnesota United</b>|<i>Starry Night Kit</i>|"
+
+);
+
+let semiTwo = new Array(
+"<img src=kits/2024/png/mtl1.png> |<b>CF Montreal</b>|<i>La Main</i>|",
+"<img src=kits/2024/png/ner1.png> |<b>New England Revolution</b>|<i>Boston Tea Party</i>|",
+"<img src=kits/2024/png/nsh1.png> |<b>Nashville SC</b>|<i>The 615 Kit</i>|"
+
+,
+"<img src=kits/2024/png/nycfc1.png> |<b>New York City FC</b>|<i>24/7 Kit</i>|",
+"<img src=kits/2024/png/nyrb1.png> |<b>New York Red Bulls</b>|<i>Legacy Kit</i>|",
+"<img src=kits/2024/png/orl1.png> |<b>Orlando City</b>|<i>Legacy Kit</i>|",
+"<img src=kits/2024/png/phi1.png> |<b>Philadelphia Union</b>|<i>XV Kit</i>|",
+"<img src=kits/2024/png/por1.png> |<b>Portland Timbers</b>|<i>Nature Unites Kit</i>|",
+"<img src=kits/2024/png/rsl1.png> |<b>Real Salt Lake</b>|<i>Peak Utah</i>|",
+"<img src=kits/2024/png/sea1.png> |<b>Seattle Sounders FC</b>|<i>The Anniversary Kit</i>|",
+"<img src=kits/2024/png/sj1.png> |<b>San Jose Earthquakes</b>|<i>The 50 Kit</i>|",
+"<img src=kits/2024/png/stl1.png> |<b>St. Louis CITY SC</b>|<i>The Confluence Kit</i>|",
+"<img src=kits/2024/png/skc1.png> |<b>Sporting Kansas City</b>|<i>Diamonds Our Forever</i>|",
+"<img src=kits/2024/png/tor1.png> |<b>Toronto FC</b>|<i>GTA Kit</i>|",
+"<img src=kits/2024/png/van1.png> |<b>Vancouver Whitecaps FC</b>|<i>The 50 Jersey</i>|"
+
+);
+*/
+//*********************************************************
+
+var lstMember = new Array();
+var parent = new Array();
+var equal = new Array();
+var rec = new Array();
+var cmp1,cmp2;
+var head1,head2;
+var nrec;
+
+var numQuestion;
+var totalSize;
+var finishSize;
+var finishKit;
+
+let showQualifiers = false;
+let showDiscord = false;
+
+//The initialization of the variable+++++++++++++++++++++++++++++++++++++++++++++
+function initList(){
+	var n = 0;
+	var mid;
+	var i;
+
+	//The sequence that you should sort
+	lstMember[n] = new Array();
+	for (i=0; i<namMember.length; i++) {
+		lstMember[n][i] = i;
+	}
+	parent[n] = -1;
+	totalSize = 0;
+	n++;
+
+	for (i=0; i<lstMember.length; i++) {
+		//And element divides it in two/more than two
+		//Increase divided sequence of last in first member
+		if(lstMember[i].length>=2) {
+			mid = Math.ceil(lstMember[i].length/2);
+			lstMember[n] = new Array();
+			lstMember[n] = lstMember[i].slice(0,mid);
+			totalSize += lstMember[n].length;
+			parent[n] = i;
+			n++;
+			lstMember[n] = new Array();
+			lstMember[n] = lstMember[i].slice(mid,lstMember[i].length);
+			totalSize += lstMember[n].length;
+			parent[n] = i;
+			n++;
+		}
+	}
+
+	//Preserve this sequence
+	for (i=0; i<namMember.length; i++) {
+		rec[i] = 0;
+	}
+	nrec = 0;
+
+	//List that keeps your results
+	//Value of link initial
+	// Value of link initial
+	for (i=0; i<=namMember.length; i++) {
+		equal[i] = -1;
+	}
+
+	cmp1 = lstMember.length-2;
+	cmp2 = lstMember.length-1;
+	head1 = 0;
+	head2 = 0;
+	numQuestion = 1;
+	finishSize = 0;
+	finishKit = 0;
+}
+
+
+function sortList(kit){
+	var i;
+	var str;
+
+	//rec preservation
+	if (kit<0) {
+		rec[nrec] = lstMember[cmp1][head1];
+		head1++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else if (kit>0) {
+		rec[nrec] = lstMember[cmp2][head2];
+		head2++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else {
+		rec[nrec] = lstMember[cmp1][head1];
+		head1++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+		equal[rec[nrec-1]] = lstMember[cmp2][head2];
+		rec[nrec] = lstMember[cmp2][head2];
+		head2++;
+		nrec++;
+		finishSize++;
+		while (equal[rec[nrec-1]]!=-1) {
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+
+	//Processing after finishing with one list
+	if (head1<lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+		//List the remainder of cmp2 copies, list cmp1 copies when finished scanning
+		while (head1<lstMember[cmp1].length){
+			rec[nrec] = lstMember[cmp1][head1];
+			head1++;
+			nrec++;
+			finishSize++;
+		}
+	}
+	else if (head1==lstMember[cmp1].length && head2<lstMember[cmp2].length) {
+		//List the remainder of cmp1 copies, list cmp2 copies when finished scanning
+		while (head2<lstMember[cmp2].length){
+			rec[nrec] = lstMember[cmp2][head2];
+			head2++;
+			nrec++;
+			finishSize++;
+		}
+	}
+
+	//When it arrives at the end of both lists
+	//Update a pro list
+	if (head1==lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+		for (i=0; i<lstMember[cmp1].length+lstMember[cmp2].length; i++) {
+			lstMember[parent[cmp1]][i] = rec[i];
+		}
+		lstMember.pop();
+		lstMember.pop();
+		cmp1 = cmp1-2;
+		cmp2 = cmp2-2;
+		head1 = 0;
+		head2 = 0;
+
+		//Initialize the rec before performing the new comparison
+		if (head1==0 && head2==0) {
+			for (i=0; i<namMember.length; i++) {
+				rec[i] = 0;
+			}
+			nrec = 0;
+		}
+	}
+
+	if (cmp1<0) {
+		str = "Matchup #"+(numQuestion-1)+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+		document.getElementById("matchupNumber").innerHTML = str;
+        document.getElementById("progressBar").style.display = "none";
+		showResult();
+		finishKit = 1;
+	}
+	else {
+		showImage();
+	}
+}
+
+//The results
+
+function showResult() {
+    // Preprocess namMember to replace /png/ with /png/150x/
+    var processedNamMember = namMember.map(item => item.replace(/\/png\//g, "/png/150x/").replace("New England","N.E.").replace("Vancouver Whitecaps FC","Van. Whitecaps"));
+
+    var ranking = 1;
+    var sameRank = 1;
+    var str = "";
+    var strx = "!submit 2023 ";
+    var i;
+
+    // Define a gradient of colors from green to red covering all 29 ranks
+    var colors = ["#00ff57", "#3ef846", "#56f034", "#67e91d", "#75e200", "#80da00", "#89d300", "#91cb00", "#99c300", "#9fbc00",
+                  "#a4b400", "#a9ac00", "#aea400", "#b19c00", "#b49400", "#b78c00", "#b98400", "#bb7b00", "#bc7300", "#bd6a00",
+                  "#bd6200", "#bd5900", "#bc5000", "#bb4700", "#ba3d00", "#b83300", "#b52700", "#b21a00", "#af0404"];
+//screenshot issues here
+    str += "<table style=\"width:200px; font-size:16px; border:0px solid #FFFFFF; background-color:#FFFFFF;\" align=\"center\">";
+    
+    // Add centered header row with "Your results" text
+    str += "<tr><td colspan=\"6\" style=\"text-align:center; font-weight:bold; font-size:24px;\"><br>2024 MLS Kit Rankings<br><\/td><\/tr>";
+
+for (i = 0; i < processedNamMember.length; i++) {
+    if (i % 6 === 0) { // Change condition to i % 6 === 0
+        // Start a new row every 6 members
+        if (i !== 0) {
+            // Close the previous row if this is not the first iteration
+            str += "</tr>";
+        }
+        // Start a new row
+        str += "<tr style=\"height: auto;\">";
+    }
+    // Split the processedNamMember item at "|" character
+    var memberInfo = processedNamMember[lstMember[0][i]].split("|");
+    // Add rank number above each entry and assign color based on rank
+    str += "<td style=\"border:1px solid #00025d; padding-left:1px; padding-right:1px; background-color:" + colors[ranking-1] + "; font-size: 12px; text-align:center; font-weight:bolder; \">" + "#" + ranking + ": " + "<span style=\"font-size:11px;\">" + memberInfo[1]
+    		+ "<br>"
+    	+ memberInfo[0] //shirt image
+    	/*+ "<br><span style=\"font-size:14px; margin-bottom: -5px;\">" + memberInfo[1] */+ "</span><br><span style=\"font-size:8px; line-height:10px\">" + memberInfo[2] + "</span></td>";
+
+    strx += memberInfo[0]; // Add the name to strx
+    strx += ", ";
+    
+    if (i < processedNamMember.length - 1) {
+        if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
+            sameRank++;
+        } else {
+            ranking += sameRank;
+            sameRank = 1;
+        }
+    }
+}
+    // Close the last row
+    str += "</tr>";
+
+    // Add a blank row with a height of about 20 pixels
+    str += "<tr style=\"height: 20px;\"></tr>";
+
+    // Close the table and div tags
+    str += "</table></div>";
+
+    strx = strx.replace(/, \B/, "");
+
+    document.getElementById("resultField").innerHTML = str;
+    document.getElementById("screenieButton").innerHTML = 
+"<br><button onclick=\"screencap()\" style=\"font-size: 20px; padding: 10px 20px; background-color: #ccc; border: none; border-radius: 5px\">Save Image<\/button>";
+
+    let s1results = decideQualifiers(semiOne);
+    let s2results = decideQualifiers(semiTwo);
+    document.getElementById("semi1ResultField").innerHTML = s1results;
+    document.getElementById("semi2ResultField").innerHTML = s2results;
+    document.getElementById("qualifierToggle").style.display = "inherit";
+    document.getElementById("discordToggle").style.display = "inherit";
+    document.getElementById("discordlist").innerHTML = strx;
+}
+
+
+
+
+
+
+
+
+
+//Qualifiers
+/*
+function decideQualifiers(semiArray) {
+    let ranking = 1;
+    let str = "";
+    let i;
+    str += "<table style=\"width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #00025d; border-collapse:collapse; background-color:#9fc5e8;\" align=\"center\">";
+    str += "<tr><td style=\"color:#9fc5e8; background-color:#00025d; text-align:center;\">Rank<\/td><td style=\"color:#9fc5e8; background-color:#00025d; text-align:left;\">Entry<\/td><td style=\"color:#9fc5e8; background-color:#00025d; text-align:center;\">Qualifier?</td><\/tr>";
+    for (i = 0; i < namMember.length; i++) {
+        if (semiArray.indexOf(namMember[lstMember[0][i]]) > -1){
+            str += "<tr style=\"height: 75px; background-color:";
+            str += (ranking < 11 ? "green" : "red");
+            str += "\"><td style=\"border:1px solid #00025d; text-align:right; padding-right:5px;\">" + ranking + "<\/td><td style=\"border:1px solid #00025d; padding-left:5px;\">" + namMember[lstMember[0][i]] + "<\/td><td style=\"border:1px solid #00025d;\" align=\"center\">";
+            str += (ranking < 11 ? "Q" : "NQ");
+            str += "</td></tr>";
+            ranking++;
+        }
+    }
+    str += "<\/table><\/div>";
+    return str;
+}
+*/
+
+//Indicates two elements to compare+++++++++++++++++++++++++++++++++++
+function showImage() {
+    var completionPercentage = Math.floor(finishSize * 100 / totalSize);
+    var progressBar = '<div style="width: 800px; height: 30px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; margin: 10px auto;">';
+    progressBar += '<div style="width: ' + completionPercentage + '%; height: 100%; background-color: #4caf50; border-radius: 5px;"></div>';
+    progressBar += '</div>';
+    
+    var str0 = "Matchup #" + numQuestion + "<br>" + completionPercentage + "% sorted.";
+    var str1 = "<div style='width: 300px; height: 300px; background-color: white; margin: 0 auto;'>" + namMember[lstMember[cmp1][head1]].split("|")[0] + "</div>";
+    var str2 = "<div style='width: 300px; text-align: center; font-size:18px;'>" + namMember[lstMember[cmp1][head1]].split("|")[1] + "</div>";
+    var str3 = "<div style='width: 300px; text-align: center; font-size:12px;'>" + namMember[lstMember[cmp1][head1]].split("|")[2] + "</div>";
+
+    var str4 = "<div style='width: 300px; height: 300px; background-color: white; margin: 0 auto;'>" + namMember[lstMember[cmp2][head2]].split("|")[0] + "</div>";
+    var str5 = "<div style='width: 300px; text-align: center; font-size:18px;'>" + namMember[lstMember[cmp2][head2]].split("|")[1] + "</div>";
+    var str6 = "<div style='width: 300px; text-align: center; font-size:12px;'>" + namMember[lstMember[cmp2][head2]].split("|")[2] + "</div>";
+
+    document.getElementById("matchupNumber").innerHTML = str0;
+    document.getElementById("leftField").innerHTML = str1 + str2 + str3;
+    document.getElementById("rightField").innerHTML = str4 + str5 + str6;
+
+    numQuestion++;
+    document.getElementById("progressBar").innerHTML = progressBar;
+
+}
+
+
+//Convert numeric value into a name (emoticon)+++++++++++++++++++++++++++++++
+function toNameFace(n){
+	var str = namMember[n];
+
+	//Exclude the following comment when adding an emoticon
+	//Warning not to contradict an indext of namMember
+	/*
+	str += "<br>&#9472;&#9472;&#9472;&#9472;<br>";
+	switch(n) {
+		//case -1 Because it is a sample, delete it
+		case -1: str+="&#65288; ｴ&#8704;&#65344;&#65289;";break;
+		default: str+=""+n;
+	}
+	*/
+	return str;
+}
+
+function toggleQualifiers() {
+    showQualifiers = !showQualifiers;
+    if (showQualifiers){
+        document.getElementById("qualifiers").style.display = "inherit";
+    } else {
+        document.getElementById("qualifiers").style.display = "none";
+    }
+}
+
+function toggleDiscordlist() {
+    showDiscord = !showDiscord;
+    if (showDiscord){
+        document.getElementById("discordlist").style.display = "inherit";
+    } else {
+        document.getElementById("discordlist").style.display = "none";
+    }
+}
+//-->
+</script>
+
+
+<!-- hey you don't steal my code >:( ~gerbear -->
+
+<!--dom to img script-->
+<script type="text/javascript" src="FileSaver.min.js"></script>
+<script type="text/javascript" src="dom-to-image.min.js"></script>
+
+  
+<script>
+function screencap() {
+    var node = document.getElementById('resultField');
+    domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var modal = document.createElement('div');
+            modal.id = 'modal';
+            modal.style.position = 'fixed';
+            modal.style.zIndex = '9999';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = 'auto';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'start';
+            //modal.style.justifyContent = 'center';
+
+            var img = new Image();
+            img.src = dataUrl;
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+
+            modal.appendChild(img);
+
+            modal.addEventListener('click', function () {
+                document.body.removeChild(modal);
+            });
+
+            document.body.appendChild(modal);
+        })
+        .catch(function (error) {
+            console.error('oops, something went wrong!', error);
+        });
+}
+
+</script>
+  
+<!-- end dom to image code-->
+
+<style type="text/css">
+<!--
+/**********************************************************
+
+ When changing the style of the list, please edit here. 
+
+**********************************************************/
+p{
+	font-size: 12px;
+	font-family: sans-serif;
+	text-align: center;
+}
+#discordlist{
+	font-size: 10px;
+	font-family: sans-serif;
+	text-align: center;
+}
+body{
+	background-color: #FFFFFF;
+	color: #000000;
+}
+#mainTable{
+	font-size: 25px;
+	font-family: sans-serif;
+	text-align: center;
+	vertical-align: text-top;
+	width: 650px;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: separate;
+	border-spacing: 10px 5px;
+}
+#resultField, #semi1ResultField, #semi2ResultField{
+	/*font-size: 36px;*/
+	font-family: sans-serif;
+	text-align: center;
+}
+#leftField{
+	width: 320px;
+	height: 330px;
+	/*border: 1px solid #00025d;*/
+}
+#rightField{
+	width: 320px;
+	height: 330px;
+	/*border: 1px solid #00025d;*/
+}
+.middleField{
+	width: 10px;
+	height: 420px;
+	border: 1px solid #00025d;
+}
+.gerbear{
+	width: 120px;
+	height:70px
+}
+//-->
+<!--
+A{
+  text-decoration : none;
+}
+-->
+<!--
+a:hover{color:#0042ff;}
+-->
+</style>
+<meta http-equiv="x-dns-prefetch-control" content="off"/>
+
+</head>
+
+<body link="#ff0089" vlink="#ff0089" alink="#ff0089">
+<center><!--<img src="escheader2023.png">--></center>
+<table id="mainTable" align="center">
+	<tbody>
+	<tr>
+		<td colspan=3>
+		
+			<p>&nbsp;</p>
+			
+			<h1> 2024 MLS Full Kit Ranker </h1>
+
+			<p><b>Instructions:</b> You will be presented with two 2024 MLS kits. Click the kit you like more and it will be ranked above the other. </p>
+
+			<p>To share your rankings, use the Save Image button to generate a PNG to save.</p>			
+</td>
+	</tr>
+	<tr>
+
+		<td id="matchupNumber" colspan="3" style="padding-bottom: 10px;" style="text-align:center;">Matchup #1<br>0% sorted.</td>
+	</tr>
+	<tr>
+		<td id="leftField" onclick="if(finishKit==0)sortList(-1);" rowspan="2" style="text-align:center;"></td>
+		<!-- <td class="middleField" onclick="if(finishKit==0)sortList(0);" style="text-align:center;">
+
+			I Like Both
+		</td> -->
+
+		<td id="rightField" onclick="if(finishKit==0)sortList(1);" rowspan="2"style="text-align:center;"></td>
+	</tr>
+	<!-- <tr>
+		<td class="middleField" onclick="if(finishKit==0)sortList(0);"style="text-align:center;">
+			No Opinion
+		</td>
+
+	</tr> -->
+</tbody></table><br><br>
+<div id="progressBar"></div>
+<div id="resultField">
+<br><br>
+</div>
+
+
+<script type="text/javascript">
+	initList();
+	showImage();
+</script>
+
+<div id="screenieButton" style="text-align: center;"></div>
 </body>
 </html>
