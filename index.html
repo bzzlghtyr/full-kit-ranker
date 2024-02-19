@@ -8,14 +8,25 @@
 <meta charset="UTF-8">
 <title>Major League Soccer Kit Ranker</title>
     <style>
+/* Define @font-face rule */
+@font-face {
+    font-family: 'mls_2020plain';
+    src: url('/fonts/mls_2020/mls_2020-webfont.woff2') format('woff2'),
+         url('/fonts/mls_2020/mls_2020-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/* Use the custom font in your styles */
+body {
+  font-family: 'CustomFont', sans-serif; /* Use the custom font as the fallback */
+}
         li {
             font-size: 10px;
         }
-        h1 {
-			font-family: 'mls_2020plain', Arial, sans-serif;
-			font-weight:normal;
-			font-style:normal;
-		}
+		h1 {
+  font-family: 'CustomFont', sans-serif; /* Use the custom font as the fallback */
+}
         img {
             touch-action: manipulation;
         }
