@@ -169,21 +169,30 @@ var finishKit;
 let showQualifiers = false;
 let showDiscord = false;
 
-//The initialization of the variable+++++++++++++++++++++++++++++++++++++++++++++
-function initList(){
-	var n = 0;
-	var mid;
-	var i;
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function initList() {
+    var n = 0;
+    var mid;
+    var i;
+
     // Shuffle the namMember array
     shuffleArray(namMember);
-	//The sequence that you should sort
-	lstMember[n] = new Array();
-	for (i=0; i<namMember.length; i++) {
-		lstMember[n][i] = i;
-	}
-	parent[n] = -1;
-	totalSize = 0;
-	n++;
+
+    // The sequence that you should sort
+    lstMember[n] = new Array();
+    for (i = 0; i < namMember.length; i++) {
+        lstMember[n][i] = i;
+    }
+    parent[n] = -1;
+    totalSize = 0;
+    n++;
 
 	for (i=0; i<lstMember.length; i++) {
 		//And element divides it in two/more than two
@@ -662,16 +671,7 @@ a:hover{color:#0042ff;}
 <br><br>
 </div>
 
-<!-- New table to hold sorted kit data -->
-<table id="sortedData" align="center" style="margin-top: 20px;">
-    <tbody>
-        <tr>
-            <th>#</th>
-            <th>Team</th>
-            <th>Kit Name</th>
-        </tr>
-    </tbody>
-</table>
+
 
 <script type="text/javascript">
 	initList();
