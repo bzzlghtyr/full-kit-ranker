@@ -174,7 +174,8 @@ function initList(){
 	var n = 0;
 	var mid;
 	var i;
-
+    // Shuffle the namMember array
+    shuffleArray(namMember);
 	//The sequence that you should sort
 	lstMember[n] = new Array();
 	for (i=0; i<namMember.length; i++) {
@@ -661,6 +662,16 @@ a:hover{color:#0042ff;}
 <br><br>
 </div>
 
+<!-- New table to hold sorted kit data -->
+<table id="sortedData" align="center" style="margin-top: 20px;">
+    <tbody>
+        <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Kit Name</th>
+        </tr>
+    </tbody>
+</table>
 
 <script type="text/javascript">
 	initList();
