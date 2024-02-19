@@ -504,62 +504,83 @@ function screencap() {
             document.body.removeChild(clone);
         });
 }
+// This function is called after capturing the screenshot
 function showModal() {
     if (screenshotUrl) {
-        var modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.zIndex = '9999';
-        modal.style.top = '0';
-        modal.style.left = '0';
-        modal.style.width = '100vw';
-        modal.style.height = '100vh';
-        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        modal.style.display = 'flex';
-        modal.style.justifyContent = 'center';
-        modal.style.alignItems = 'center';
-        modal.style.flexDirection = 'column'; // To stack buttons below the image
+        // Convert dataUrl to Blob for upload
+        fetch(screenshotUrl)
+            .then(res => res.blob())
+            .then(blob => {
+                // Here you can directly upload the blob to your endpoint
+                // For simplicity, the example assumes you're using FormData
+                var formData = new FormData();
+                formData.append("image", blob, "screenshot.png");
 
-        var img = new Image();
-        img.src = screenshotUrl;
-        img.style.maxWidth = '90%';
-        img.style.maxHeight = '90%';
-
-        var closeButton = document.createElement('button');
-        closeButton.innerText = 'Close';
-        closeButton.style.marginTop = '20px';
-        closeButton.onclick = function() {
-            document.body.removeChild(modal);
-        };
-
-        // Since you cannot directly tweet an image file from a local source or JavaScript blob,
-        // you will typically need to upload the image to a server or use an existing image URL.
-        // For demonstration, I'll create a button that tweets a message, assuming the image is hosted.
-        var tweetButton = document.createElement('button');
-        tweetButton.innerText = 'Share';
-        tweetButton.style.marginTop = '10px';
-        tweetButton.onclick = function() {
-            // Open a new window for the Twitter share URL.
-            var tweetText = "Check out my Major League Soccer kit ranking!";
-            var urlToTweet = "URL_TO_YOUR_IMAGE"; // You must replace this with the URL where your image is hosted.
-            var twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(urlToTweet)}`;
-            window.open(twitterUrl, '_blank');
-        };
-
-        modal.appendChild(img);
-        modal.appendChild(closeButton);
-        modal.appendChild(tweetButton);
-
-        // Prevent the modal from closing when clicking inside it
-        modal.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-
-        // Append the modal to the body
-        document.body.appendChild(modal);
+                // Replace with your API Gateway endpoint
+                var endpoint = "https://7cofov9d2l.execute-api.us-east-2.amazonaws.com/prod/upload";
+                
+                // Perform the upload
+                fetch(endpoint, {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Assuming your Lambda function returns the URL of the uploaded image
+                    console.log("Upload successful: ", data.imageUrl);
+                    createModalWithImageAndShareButton(data.imageUrl);
+                })
+                .catch(error => {
+                    console.error("Upload failed: ", error);
+                });
+            });
     } else {
         console.error("No screenshot URL found.");
     }
 }
+
+// This function creates the modal with the image and share button, using the uploaded image URL
+function createModalWithImageAndShareButton(imageUrl) {
+    var modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.zIndex = '9999';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100vw';
+    modal.style.height = '100vh';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    modal.style.display = 'flex';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.flexDirection = 'column';
+
+    var img = new Image();
+    img.src = imageUrl;
+    img.style.maxWidth = '90%';
+    img.style.maxHeight = '90%';
+
+    var closeButton = document.createElement('button');
+    closeButton.innerText = 'Close';
+    closeButton.style.marginTop = '20px';
+    closeButton.onclick = function() {
+        document.body.removeChild(modal);
+    };
+
+    var tweetButton = document.createElement('button');
+    tweetButton.innerText = 'Share';
+    tweetButton.style.marginTop = '10px';
+    tweetButton.onclick = function() {
+        var tweetText = "Check out my Major League Soccer kit ranking!";
+        var twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(imageUrl)}`;
+        window.open(twitterUrl, '_blank');
+    };
+
+    modal.appendChild(img);
+    modal.appendChild(closeButton);
+    modal.appendChild(tweetButton);
+    document.body.appendChild(modal);
+}
+
 
 
 
