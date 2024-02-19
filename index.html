@@ -388,7 +388,7 @@ function showResult() {
     str += "<table style=\"width:200px; font-size:16px; border:0px solid #FFFFFF; background-color:#FFFFFF;\" align=\"center\">";
     
     // Add centered header row with "Your results" text
-    str += "<tr><td colspan=\"6\" style=\"text-align:center; font-weight:bold; font-size:24px;\"><br>2024 MLS Kit Rankings<br><\/td><\/tr>";
+    str += "<tr><td colspan=\"6\" style=\"text-align:center; font-weight:bold; font-size:24px;\"><hr>2024 MLS Kit Rankings<br><\/td><\/tr>";
 
 for (i = 0; i < processedNamMember.length; i++) {
     if (i % 6 === 0) { // Change condition to i % 6 === 0
@@ -549,6 +549,11 @@ function toggleDiscordlist() {
 <script>
 function screencap() {
     var node = document.getElementById('resultField');
+    var originalHeight = node.offsetHeight; // Store the original height
+    
+    // Adjust the height to ensure proper capture
+    node.style.height = (originalHeight + 20) + 'px'; // Increase height by 10 pixels (adjust as needed)
+    
     domtoimage.toPng(node)
         .then(function (dataUrl) {
             var modal = document.createElement('div');
@@ -558,16 +563,16 @@ function screencap() {
             modal.style.top = '0';
             modal.style.left = '0';
             modal.style.width = '100%';
-            modal.style.height = 'auto';
+            modal.style.height = '100%';
             modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
             modal.style.display = 'flex';
-            modal.style.alignItems = 'start';
-            //modal.style.justifyContent = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
 
             var img = new Image();
             img.src = dataUrl;
-            img.style.maxWidth = '100%';
-            img.style.height = 'auto';
+            img.style.maxWidth = '90%'; // Adjust the maximum width of the image
+            img.style.maxHeight = '90%'; // Adjust the maximum height of the image
 
             modal.appendChild(img);
 
@@ -578,9 +583,88 @@ function screencap() {
             document.body.appendChild(modal);
         })
         .catch(function (error) {
-            console.error('oops, something went wrong!', error);
+            console.error('Oops, something went wrong!', error);
+        })
+        .finally(function () {
+            // Reset the height to its original value after capturing the screenshot
+            node.style.height = originalHeight + 'px';
         });
 }
+
+/*
+Script to resize kit images first, then use the cropped images.
+The problem is that it looks dumb lol
+function cropKitImages() {
+    var kitImages = document.querySelectorAll('#resultField img[src$=".png"]');
+    
+    kitImages.forEach(function(image) {
+        // Set the cropping dimensions and offsets
+        var cropWidth = 58;
+        var cropHeight = 58;
+        var offsetX = 67;
+        var offsetY = 24;
+        
+        // Adjust the position of the image to show the cropped area
+        image.style.objectPosition = '-' + offsetX + 'px -' + offsetY + 'px';
+        image.style.objectFit = 'none'; // Ensure that the object fit property is set to none
+        
+        // Set the width and height of the image to crop to the specified dimensions
+        image.width = cropWidth;
+        image.height = cropHeight;
+    });
+}
+
+function screencap() {
+    cropKitImages(); // Crop kit images before capturing the screenshot
+
+    var node = document.getElementById('resultField');
+    var originalHeight = node.offsetHeight; // Store the original height
+    
+    // Adjust the height to ensure proper capture
+    node.style.height = (originalHeight + 20) + 'px'; // Increase height by 10 pixels (adjust as needed)
+    
+    domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var modal = document.createElement('div');
+            modal.id = 'modal';
+            modal.style.position = 'fixed';
+            modal.style.zIndex = '9999';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+
+            var img = new Image();
+            img.src = dataUrl;
+            img.style.maxWidth = '90%'; // Adjust the maximum width of the image
+            img.style.maxHeight = '90%'; // Adjust the maximum height of the image
+
+            modal.appendChild(img);
+
+            modal.addEventListener('click', function () {
+                document.body.removeChild(modal);
+            });
+
+            document.body.appendChild(modal);
+        })
+        .catch(function (error) {
+            console.error('Oops, something went wrong!', error);
+        })
+        .finally(function () {
+            // Reset the height to its original value after capturing the screenshot
+            node.style.height = originalHeight + 'px';
+            // Reset the positions of the kit images
+            var kitImages = document.querySelectorAll('#resultField img[src$=".png"]');
+            kitImages.forEach(function(image) {
+                image.style.objectPosition = 'initial';
+            });
+        });
+}*/
+
 
 </script>
   
@@ -692,7 +776,6 @@ a:hover{color:#0042ff;}
 </tbody></table><br><br>
 <div id="progressBar"></div>
 <div id="resultField">
-<br><br>
 </div>
 
 
