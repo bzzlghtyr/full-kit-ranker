@@ -144,7 +144,7 @@ function sortList(flag) {
     }
 
     if (cmp1 < 0) {
-        str = "Battle No." + (numQuestion - 1) + "<br>100% sorted.";
+        str = "Matchup #" + (numQuestion - 1) + "<br>100% sorted.";
         document.getElementById("matchupNumber").innerHTML = str;
         document.getElementById("progressBar").style.display = "none";
         document.getElementById("leftField").style.display = "none";
@@ -164,13 +164,14 @@ function showImage() {
 
     var str0 = "Matchup #" + numQuestion + "<br>" + completionPercentage + "% sorted.";
     
-    var str1 = "<div class='battle-card'>" + namMember[lstMember[cmp1][head1]].split("|")[0] + "</div>";
-    var str2 = "<div class='battle-name'>" + namMember[lstMember[cmp1][head1]].split("|")[1] + "</div>";
-    var str3 = "<div class='battle-kit'>" + namMember[lstMember[cmp1][head1]].split("|")[2] + "</div>";
+    // Parses data from kitinfo.js (Image | Name | Kit)
+    var str1 = namMember[lstMember[cmp1][head1]].split("|")[0];
+    var str2 = "<br><span style='font-size:18px; font-weight:bold;'>" + namMember[lstMember[cmp1][head1]].split("|")[1] + "</span>";
+    var str3 = "<br><span style='font-size:12px; color:#555;'>" + namMember[lstMember[cmp1][head1]].split("|")[2] + "</span>";
 
-    var str4 = "<div class='battle-card'>" + namMember[lstMember[cmp2][head2]].split("|")[0] + "</div>";
-    var str5 = "<div class='battle-name'>" + namMember[lstMember[cmp2][head2]].split("|")[1] + "</div>";
-    var str6 = "<div class='battle-kit'>" + namMember[lstMember[cmp2][head2]].split("|")[2] + "</div>";
+    var str4 = namMember[lstMember[cmp2][head2]].split("|")[0];
+    var str5 = "<br><span style='font-size:18px; font-weight:bold;'>" + namMember[lstMember[cmp2][head2]].split("|")[1] + "</span>";
+    var str6 = "<br><span style='font-size:12px; color:#555;'>" + namMember[lstMember[cmp2][head2]].split("|")[2] + "</span>";
 
     document.getElementById("matchupNumber").innerHTML = str0;
     document.getElementById("leftField").innerHTML = str1 + str2 + str3;
@@ -197,7 +198,7 @@ function showResult() {
         "#af0404", "#800000"
     ];
 
-    var str = '<div style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; font-family: sans-serif;">2026 MLS Kit Rankings</div>';
+    var str = '<div class="mlsfont">2026 MLS Kit Rankings</div>';
     
     str += '<div class="results-grid" id="capture-area">';
 
@@ -210,10 +211,74 @@ function showResult() {
 
         str += '<div class="result-card" style="border-top: 10px solid ' + rankColor + ';">';
         str += '  <span class="rank-badge">#' + ranking + '</span>';
-        str += '  <div class="img-wrapper">' + imgTag + '</div>';
-        str += '  <div class="team-name">' + teamName + '</div>';
-        str += '  <div class="kit-name">' + kitName + '</div>';
+        str +=    imgTag; // This contains class="kit-thumb" which CSS will resize
+        str += '  <span style="font-weight:bold; font-size:14px; margin-bottom:2px;">' + teamName + '</span>';
+        str += '  <span style="font-size:11px; font-style:italic; color:#555;">' + kitName + '</span>';
         str += '</div>';
 
         if (i < processedNamMember.length - 1) {
             if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
+                sameRank++;
+            } else {
+                ranking += sameRank;
+                sameRank = 1;
+            }
+        }
+    }
+    str += '</div>';
+
+    var resultsContainer = document.getElementById("resultsContainer");
+    resultsContainer.style.display = "block";
+    resultsContainer.innerHTML = str;
+
+    var btnDiv = document.getElementById("screenieButton");
+    btnDiv.style.display = "block";
+    btnDiv.innerHTML = '<button onclick="screencap()" class="save-btn">Save Image</button>';
+}
+
+function screencap() {
+    var node = document.getElementById('resultsContainer'); 
+    
+    domtoimage.toPng(node, { bgcolor: '#ffffff' })
+        .then(function (dataUrl) {
+            var modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.zIndex = '9999';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.flexDirection = 'column';
+            
+            var img = new Image();
+            img.src = dataUrl;
+            img.style.maxHeight = '80%';
+            img.style.maxWidth = '90%';
+            img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
+            img.style.marginBottom = '20px';
+
+            var txt = document.createElement('div');
+            txt.innerHTML = "Right click to save image. Click anywhere to close.";
+            txt.style.color = "#fff";
+            txt.style.fontFamily = "sans-serif";
+            txt.style.marginBottom = "10px";
+
+            modal.appendChild(txt);
+            modal.appendChild(img);
+            
+            modal.onclick = function() { document.body.removeChild(modal); };
+            document.body.appendChild(modal);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+}
+
+window.onload = function() {
+    initList();
+    showImage();
+};
