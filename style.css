@@ -1,110 +1,119 @@
-@font-face {
-    font-family: 'mls_2020plain';
-    src: url('fonts/mls_2020/mls_2020-webfont.woff2') format('woff2'),
-         url('fonts/mls_2020/mls_2020-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-.mlsfont {
-    font-family: 'mls_2020plain', sans-serif;
-    display: block;
-    font-size: 2em;
-    margin-top: 0.67em;
-    margin-bottom: 0.67em;
-}
-img {
-    touch-action: manipulation;
-}
-#modal img {
-    max-width: 90%;
-    max-height: 90%;
-    width: auto;
-    height: auto;
-}
-#progressBarContainer {
-    width: 600px;
-    margin: 0 auto;
-}
-p {
-    font-size: 12px;
-    font-family: sans-serif;
-    text-align: center;
-}
 body {
-    background-color: #FFFFFF;
-    color: #000000;
-}
-#mainTable {
-    font-size: 25px;
-    font-family: sans-serif;
-    text-align: center;
-    vertical-align: top;
-    width: 650px;
-    margin: 0 auto;
-    border-collapse: separate;
-    border-spacing: 10px 5px;
-}
-#resultsContainer {
-    position: absolute;
-    left: -9999px;
-    top: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 20px;
 }
 
-#leftField, #rightField {
-    width: 320px;
-    height: 330px;
+#mainTable {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
-.middleField {
-    width: 10px;
-    height: 420px;
-    border: 1px solid #00025d;
-}
-.gerbear {
-    width: 120px;
-    height: 70px;
-}
-a {
-    text-decoration: none;
-}
-a:hover {
-    color: #0042ff;
-}
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-}
-.modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-}
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
-}
-.kit-thumb {
+
+.battle-card img {
     width: 300px;
     height: 300px;
     object-fit: contain;
-    display: block;    
-    margin: 0 auto;    
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.battle-card img:hover {
+    transform: scale(1.05);
+}
+
+.battle-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.battle-kit {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+}
+
+#progressBarContainer {
+    width: 100%;
+    max-width: 600px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    background-color: #ff0089;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.result-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.kit-thumb {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.rank-badge {
+    font-size: 1.5em;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.kit-name {
+    font-size: 0.75em;
+    color: #777;
+    font-style: italic;
+}
+
+.save-btn {
+    font-size: 18px;
+    padding: 12px 24px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.save-btn:hover {
+    background-color: #333;
 }
