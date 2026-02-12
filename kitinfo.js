@@ -1,3 +1,4 @@
+// KIT DATA ARRAY
 var namMember = new Array(
   "<img src='kits/2026/atl.png' class='kit-thumb'> |<b>Atlanta United</b>|<i>Spirit of '96</i>|",
   "<img src='kits/2026/atx.png' class='kit-thumb'> |<b>Austin FC</b>|<i>The Rooted Kit</i>|",
