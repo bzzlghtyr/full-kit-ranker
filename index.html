@@ -1,68 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta property="og:title" content="Full Kit Ranker">
-  <meta property="og:description" content="Create your definitive ranking of Major League Soccer kits.">
-  <meta property="og:image" content="https://bzzlghtyr.github.io/full-kit-ranker/img/web-preview.png">
-  <meta property="og:url" content="https://bzzlghtyr.github.io/full-kit-ranker/">
-  <meta property="og:type" content="website">
-  <meta name="viewport" content="width=device-width, maximum-scale=0.6">
   <meta charset="UTF-8">
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <title>Major League Soccer Kit Ranker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 MLS Kit Ranker</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body link="#ff0089" vlink="#ff0089" alink="#ff0089">
-  <div style="text-align:right; padding:10px 20px; position:absolute; right:0; top:0; font-size:10px; font-family:sans-serif;">
-    Created by: Joseph Même | <a href="https://twitter.com/ThreeDEF" target="_blank" style="color:#ff0089; text-decoration:none;">@ThreeDEF</a>
+<body>
+
+  <div style="text-align:center; padding: 20px;">
+    <h1>MLS Kit Ranker 2026</h1>
+    <p>Select your favorite kit in each matchup.</p>
   </div>
-  <center><!-- Optional header image --></center>
-  
-  <table id="mainTable" align="center">
+
+  <table id="mainTable">
     <tbody>
       <tr>
-        <td colspan="3">
-          <p class="mlsfont">MLS Full Kit Ranker</p>
-          <p style="font-size:20px;"><b><u>How It Works</u></b></p>
-          <p style="font-size:16px;">There are 2 kits in view below. Select the one you prefer. Repeat.</p>
-          <p style="font-size:13px;"><i>To share your rankings, a <b>Show Results</b> button will appear below your final rankings.<br>
-          Save the image in the pop-up.</i></p>
-          <p style="font-size:8px;"><i>Disclaimer: it's not the "full kit" but I couldn't resist the name.</i></p>
-          <hr>
+        <td id="matchupNumber" colspan="3" style="text-align:center; padding-bottom:15px; font-weight:bold;">
+          Matchup #1 - 0% sorted.
         </td>
       </tr>
       <tr>
-        <td id="matchupNumber" colspan="3" style="padding-bottom:10px; font-size:18px; text-align:center;"><br>Matchup #1 - 0% sorted.</td>
-      </tr>
-      <tr>
-        <td id="leftField" onclick="if(finishKit==0)sortList(-1);" rowspan="2" style="text-align:center;"></td>
-        <td id="rightField" onclick="if(finishKit==0)sortList(1);" rowspan="2" style="text-align:center;"></td>
+        <td id="leftField" onclick="if(finishKit==0)sortList(-1);" style="text-align:center; width:50%; cursor:pointer;"></td>
+        <td id="rightField" onclick="if(finishKit==0)sortList(1);" style="text-align:center; width:50%; cursor:pointer;"></td>
       </tr>
     </tbody>
   </table>
-  
-  <br><br>
+
   <div id="progressBarContainer">
     <div id="progressBar"></div>
   </div>
 
-  <!-- Hidden container for final results (standard shareable image) -->
   <div id="resultsContainer" style="display:none;"></div>
+  
+  <div id="screenieButton" style="text-align:center; display:none; margin-top:20px;"></div>
 
-  <!-- Container for the Show Results button -->
-  <div id="screenieButton" style="text-align:center; display:none;"></div>
-
-  <!--
-  The fancy layout containers are currently commented out.
-  <div id="fancyResultsContainer" style="display:none;"></div>
-  <div id="fancyScreenieButton" style="text-align:center; display:none;"></div>
-  -->
-
-  <script src="prefetch.js"></script>
   <script src="kitinfo.js"></script>
-  <script src="script.js"></script>
   <script src="FileSaver.min.js"></script>
   <script src="dom-to-image.min.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>
