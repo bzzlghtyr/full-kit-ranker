@@ -101,3 +101,10 @@ a:hover {
     color: black;
     text-decoration: none;
 }
+.kit-thumb {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    display: block;    
+    margin: 0 auto;    
+}
