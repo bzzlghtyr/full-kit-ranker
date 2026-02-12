@@ -1,39 +1,47 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: sans-serif; /* Default fallback */
     background-color: #ffffff;
-    color: #333;
+    color: #000;
     margin: 0;
     padding: 20px;
 }
 
+/* User's Custom Font Class */
+.mlsfont {
+    font-family: 'MLS', sans-serif; /* Assumes you have the font loaded locally */
+    font-weight: bold;
+    font-size: 32px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* BATTLE STYLES */
 #mainTable {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+    text-align: center;
 }
 
-.battle-card img {
+#leftField, #rightField {
+    width: 50%;
+    vertical-align: top;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* The "Perfect Resizing" - Keeps battle images at 300px */
+.kit-thumb {
     width: 300px;
     height: 300px;
     object-fit: contain;
-    cursor: pointer;
     transition: transform 0.2s;
 }
 
-.battle-card img:hover {
+#leftField:hover .kit-thumb, 
+#rightField:hover .kit-thumb {
     transform: scale(1.05);
-}
-
-.battle-name {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-.battle-kit {
-    font-size: 14px;
-    color: #666;
-    font-style: italic;
 }
 
 #progressBarContainer {
@@ -53,6 +61,7 @@ body {
     transition: width 0.3s;
 }
 
+/* RESULTS GRID (Overrides kit-thumb size for the list) */
 .results-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -73,13 +82,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
 }
 
-.kit-thumb {
-    width: 100%;
-    height: 160px;
-    object-fit: contain;
+/* Override .kit-thumb size INSIDE the results grid only */
+.result-card .kit-thumb {
+    width: 100% !important;
+    height: 160px !important;
     margin-bottom: 8px;
 }
 
@@ -90,19 +98,6 @@ body {
     margin-bottom: 5px;
 }
 
-.team-name {
-    font-weight: bold;
-    font-size: 0.9em;
-    margin-bottom: 2px;
-    line-height: 1.2;
-}
-
-.kit-name {
-    font-size: 0.75em;
-    color: #777;
-    font-style: italic;
-}
-
 .save-btn {
     font-size: 18px;
     padding: 12px 24px;
@@ -111,9 +106,6 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 40px;
-}
-
-.save-btn:hover {
-    background-color: #333;
+    margin: 20px auto;
+    display: block;
 }
