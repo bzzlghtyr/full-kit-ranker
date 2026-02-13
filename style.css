@@ -71,64 +71,7 @@ body {
     transition: width 0.3s;
 }
 
-/* --- RESULT POSTER STYLES --- */
-/* This container will be momentarily visible during generation */
-#resultsContainer {
-    width: 900px; /* Fixed high-res width */
-    margin: 0 auto;
-    background-color: #fff;
-    display: none; /* Hidden by default */
-}
-
-.result-poster {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    padding: 20px;
-    width: 100%; 
-    background-color: #fff;
-    box-sizing: border-box;
-}
-
-.result-card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.result-card .kit-thumb {
-    width: 100% !important;
-    height: 140px !important;
-    margin-bottom: 5px;
-}
-
-.rank-badge {
-    font-size: 1.2em;
-    font-weight: 800;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-/* Button Styling */
-.reveal-btn {
-    font-size: 24px;
-    padding: 15px 30px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 30px auto;
-    display: block;
-    font-family: 'MLS', sans-serif;
-}
-
-/* Loading Overlay (The "Curtain") */
+/* Loading Overlay */
 #loadingOverlay {
     position: fixed;
     top: 0;
@@ -143,4 +86,5 @@ body {
     flex-direction: column;
     font-family: 'MLS', sans-serif;
     font-size: 24px;
+    text-align: center;
 }
