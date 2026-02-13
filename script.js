@@ -11,6 +11,20 @@ var totalSize;
 var finishSize;
 var finishKit;
 
+// 1. PRELOADER: Ensures images are cached before the script runs
+function prefetchImages() {
+    // Extract image URLs from the namMember array
+    for (var i = 0; i < namMember.length; i++) {
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = namMember[i].split('|')[0];
+        var img = tempDiv.querySelector('img');
+        if (img) {
+            var newImg = new Image();
+            newImg.src = img.src;
+        }
+    }
+}
+
 function initList() {
     var n = 0;
     var mid;
@@ -169,7 +183,6 @@ function showImage() {
 
     var str0 = "Matchup #" + numQuestion + "<br>" + completionPercentage + "% sorted.";
     
-    // Parse the data from kitinfo.js
     var str1 = namMember[lstMember[cmp1][head1]].split("|")[0];
     var str2 = "<br><span style='font-size:18px; font-weight:bold;'>" + namMember[lstMember[cmp1][head1]].split("|")[1] + "</span>";
     var str3 = "<br><span style='font-size:12px; color:#555;'>" + namMember[lstMember[cmp1][head1]].split("|")[2] + "</span>";
@@ -203,7 +216,6 @@ function generateAndShowImage() {
         "#af0404", "#800000"
     ];
 
-    // Build the ghost poster
     var str = '<div class="mlsfont" style="margin-bottom:10px;">2026 MLS Kit Rankings</div>';
     str += '<div class="result-poster">';
 
@@ -235,7 +247,7 @@ function generateAndShowImage() {
     var resultsContainer = document.getElementById("resultsContainer");
     resultsContainer.innerHTML = str;
     
-    // Add a delay to allow the browser to paint the new HTML before snapping
+    // Slight delay to allow DOM update
     setTimeout(function() {
         screencap();
     }, 100);
@@ -244,7 +256,16 @@ function generateAndShowImage() {
 function screencap() {
     var node = document.getElementById('resultsContainer'); 
     
-    // Config: Force white background, capture full poster width
+    // --- FORCE RENDER ON MOBILE ---
+    // 1. Move it ON SCREEN (top-left)
+    // 2. Put it ON TOP of everything (z-index 9999)
+    // 3. Make it INVISIBLE to the eye (opacity 0) but visible to the renderer
+    node.style.position = 'fixed';
+    node.style.left = '0px';
+    node.style.top = '0px';
+    node.style.zIndex = '9999';
+    node.style.opacity = '0'; // Crucial: Render it, but don't show it to user
+    
     var options = {
         bgcolor: '#ffffff',
         width: 900, 
@@ -253,9 +274,15 @@ function screencap() {
 
     domtoimage.toPng(node, options)
         .then(function (dataUrl) {
+            // --- HIDE CONTAINER AGAIN ---
+            node.style.left = '-9999px';
+            node.style.zIndex = '-1';
+            node.style.opacity = '1'; // Reset opacity for next time
+
+            // --- BUILD MODAL ---
             var modal = document.createElement('div');
             modal.style.position = 'fixed';
-            modal.style.zIndex = '99999';
+            modal.style.zIndex = '100000'; // Higher than everything
             modal.style.top = '0';
             modal.style.left = '0';
             modal.style.width = '100%';
@@ -269,9 +296,16 @@ function screencap() {
             
             var img = new Image();
             img.src = dataUrl;
-            img.style.maxWidth = '95%';
-            img.style.maxHeight = '85%'; 
+            
+            // --- SMART FIT LOGIC ---
+            // Force image to fit within 95% of viewport width and 85% of height
+            // This fixes the "zoomed in top-left" issue on mobile
+            img.style.maxWidth = '95vw'; 
+            img.style.maxHeight = '85vh'; 
+            img.style.width = 'auto';
+            img.style.height = 'auto';
             img.style.objectFit = 'contain'; 
+            
             img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
             img.style.borderRadius = '4px';
 
@@ -291,11 +325,16 @@ function screencap() {
         })
         .catch(function (error) {
             console.error(error);
+            // Hide container on error too
+            node.style.left = '-9999px';
+            node.style.zIndex = '-1';
+            node.style.opacity = '1';
             alert("Image generation failed. Please try again.");
         });
 }
 
 window.onload = function() {
+    prefetchImages(); // Load images into cache immediately
     initList();
     showImage();
 };
