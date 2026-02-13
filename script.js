@@ -147,14 +147,11 @@ function sortList(flag) {
         str = "Matchup #" + (numQuestion - 1) + "<br>100% sorted.";
         document.getElementById("matchupNumber").innerHTML = str;
         document.getElementById("progressBar").style.display = "none";
-        
-        // Hide the battle interface
         document.getElementById("leftField").style.display = "none";
         document.getElementById("rightField").style.display = "none";
         
         finishKit = 1;
         
-        // --- BUTTON NOW TRIGGERS THE IMAGE GENERATION DIRECTLY ---
         var btnDiv = document.getElementById("screenieButton");
         btnDiv.style.display = "block";
         btnDiv.innerHTML = '<button onclick="generateAndShowImage()" class="reveal-btn">REVEAL RESULTS</button>';
@@ -172,6 +169,7 @@ function showImage() {
 
     var str0 = "Matchup #" + numQuestion + "<br>" + completionPercentage + "% sorted.";
     
+    // Parse the data from kitinfo.js
     var str1 = namMember[lstMember[cmp1][head1]].split("|")[0];
     var str2 = "<br><span style='font-size:18px; font-weight:bold;'>" + namMember[lstMember[cmp1][head1]].split("|")[1] + "</span>";
     var str3 = "<br><span style='font-size:12px; color:#555;'>" + namMember[lstMember[cmp1][head1]].split("|")[2] + "</span>";
@@ -187,7 +185,6 @@ function showImage() {
     numQuestion++;
 }
 
-// THIS FUNCTION BUILDS THE LIST (HIDDEN) AND THEN SNAPSHOTS IT
 function generateAndShowImage() {
     var processedNamMember = namMember.map(item => 
         item.replace("New England", "N.E.")
@@ -206,9 +203,8 @@ function generateAndShowImage() {
         "#af0404", "#800000"
     ];
 
+    // Build the ghost poster
     var str = '<div class="mlsfont" style="margin-bottom:10px;">2026 MLS Kit Rankings</div>';
-    
-    // Grid Container (Will be hidden off-screen)
     str += '<div class="result-poster">';
 
     for (i = 0; i < processedNamMember.length; i++) {
@@ -239,14 +235,16 @@ function generateAndShowImage() {
     var resultsContainer = document.getElementById("resultsContainer");
     resultsContainer.innerHTML = str;
     
-    // Now that the HTML exists (off-screen), snap it!
-    screencap();
+    // Add a delay to allow the browser to paint the new HTML before snapping
+    setTimeout(function() {
+        screencap();
+    }, 100);
 }
 
 function screencap() {
     var node = document.getElementById('resultsContainer'); 
     
-    // Force white background, capture full poster width
+    // Config: Force white background, capture full poster width
     var options = {
         bgcolor: '#ffffff',
         width: 900, 
@@ -255,10 +253,9 @@ function screencap() {
 
     domtoimage.toPng(node, options)
         .then(function (dataUrl) {
-            // --- MODAL CREATION ---
             var modal = document.createElement('div');
             modal.style.position = 'fixed';
-            modal.style.zIndex = '9999';
+            modal.style.zIndex = '99999';
             modal.style.top = '0';
             modal.style.left = '0';
             modal.style.width = '100%';
@@ -270,12 +267,11 @@ function screencap() {
             modal.style.flexDirection = 'column';
             modal.style.cursor = 'pointer';
             
-            // Image styling for "Fit to View"
             var img = new Image();
             img.src = dataUrl;
-            img.style.maxWidth = '95%';   // Leave a little margin
-            img.style.maxHeight = '90%';  // Leave room for text
-            img.style.objectFit = 'contain'; // Ensure aspect ratio is kept
+            img.style.maxWidth = '95%';
+            img.style.maxHeight = '85%'; 
+            img.style.objectFit = 'contain'; 
             img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
             img.style.borderRadius = '4px';
 
