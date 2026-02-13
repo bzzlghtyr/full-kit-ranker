@@ -42,27 +42,5 @@
   <script src="kitinfo.js"></script>
   <script src="script.js"></script>
 
-  <div style="position:fixed; bottom:20px; right:20px; z-index:999999;">
-    <button onclick="debugAutoSort()" style="padding:15px; background:red; color:white; border:2px solid white; border-radius:8px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-      ⚡ DEBUG
-    </button>
-  </div>
-
-  <script>
-  function debugAutoSort() {
-      console.log("Debug: Force finishing...");
-      lstMember[0] = [];
-      for (var i = 0; i < namMember.length; i++) {
-          lstMember[0][i] = i; 
-      }
-      document.getElementById("mainTable").style.display = "none";
-      document.getElementById("progressBarContainer").style.display = "none";
-      finishKit = 1;
-      
-      // We call the function directly here
-      generateCanvasPoster();
-  }
-  </script>
-
 </body>
 </html>
