@@ -11,9 +11,8 @@ var totalSize;
 var finishSize;
 var finishKit;
 
-// 1. PRELOADER: Ensures images are cached before the script runs
+// PRELOAD IMAGES
 function prefetchImages() {
-    // Extract image URLs from the namMember array
     for (var i = 0; i < namMember.length; i++) {
         var tempDiv = document.createElement('div');
         tempDiv.innerHTML = namMember[i].split('|')[0];
@@ -198,7 +197,12 @@ function showImage() {
     numQuestion++;
 }
 
+// --- GENERATION LOGIC ---
 function generateAndShowImage() {
+    // 1. Show Loading Curtain
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+
     var processedNamMember = namMember.map(item => 
         item.replace("New England", "N.E.")
             .replace("Vancouver Whitecaps FC", "Van. Whitecaps")
@@ -216,6 +220,7 @@ function generateAndShowImage() {
         "#af0404", "#800000"
     ];
 
+    // Build the poster HTML
     var str = '<div class="mlsfont" style="margin-bottom:10px;">2026 MLS Kit Rankings</div>';
     str += '<div class="result-poster">';
 
@@ -247,24 +252,18 @@ function generateAndShowImage() {
     var resultsContainer = document.getElementById("resultsContainer");
     resultsContainer.innerHTML = str;
     
-    // Slight delay to allow DOM update
+    // 2. Un-hide the container so it renders (behind the curtain)
+    resultsContainer.style.display = 'block';
+
+    // 3. WAIT 500ms for images to paint on mobile
     setTimeout(function() {
         screencap();
-    }, 100);
+    }, 500);
 }
 
 function screencap() {
     var node = document.getElementById('resultsContainer'); 
-    
-    // --- FORCE RENDER ON MOBILE ---
-    // 1. Move it ON SCREEN (top-left)
-    // 2. Put it ON TOP of everything (z-index 9999)
-    // 3. Make it INVISIBLE to the eye (opacity 0) but visible to the renderer
-    node.style.position = 'fixed';
-    node.style.left = '0px';
-    node.style.top = '0px';
-    node.style.zIndex = '9999';
-    node.style.opacity = '0'; // Crucial: Render it, but don't show it to user
+    var overlay = document.getElementById('loadingOverlay');
     
     var options = {
         bgcolor: '#ffffff',
@@ -274,15 +273,15 @@ function screencap() {
 
     domtoimage.toPng(node, options)
         .then(function (dataUrl) {
-            // --- HIDE CONTAINER AGAIN ---
-            node.style.left = '-9999px';
-            node.style.zIndex = '-1';
-            node.style.opacity = '1'; // Reset opacity for next time
+            // Hide the raw HTML container again
+            node.style.display = 'none';
+            // Hide the loading curtain
+            overlay.style.display = 'none';
 
             // --- BUILD MODAL ---
             var modal = document.createElement('div');
             modal.style.position = 'fixed';
-            modal.style.zIndex = '100000'; // Higher than everything
+            modal.style.zIndex = '100000'; 
             modal.style.top = '0';
             modal.style.left = '0';
             modal.style.width = '100%';
@@ -292,20 +291,16 @@ function screencap() {
             modal.style.alignItems = 'center';
             modal.style.justifyContent = 'center';
             modal.style.flexDirection = 'column';
-            modal.style.cursor = 'pointer';
             
             var img = new Image();
             img.src = dataUrl;
             
-            // --- SMART FIT LOGIC ---
-            // Force image to fit within 95% of viewport width and 85% of height
-            // This fixes the "zoomed in top-left" issue on mobile
-            img.style.maxWidth = '95vw'; 
-            img.style.maxHeight = '85vh'; 
+            // Mobile-Friendly Sizing
+            img.style.maxWidth = '95%';
+            img.style.maxHeight = '80vh'; 
             img.style.width = 'auto';
             img.style.height = 'auto';
             img.style.objectFit = 'contain'; 
-            
             img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
             img.style.borderRadius = '4px';
 
@@ -314,7 +309,7 @@ function screencap() {
             txt.style.color = "#fff";
             txt.style.fontFamily = "sans-serif";
             txt.style.textAlign = "center";
-            txt.style.marginBottom = "10px";
+            txt.style.marginBottom = "15px";
             txt.style.fontSize = "14px";
 
             modal.appendChild(txt);
@@ -325,16 +320,13 @@ function screencap() {
         })
         .catch(function (error) {
             console.error(error);
-            // Hide container on error too
-            node.style.left = '-9999px';
-            node.style.zIndex = '-1';
-            node.style.opacity = '1';
+            overlay.style.display = 'none'; // Hide overlay if error
             alert("Image generation failed. Please try again.");
         });
 }
 
 window.onload = function() {
-    prefetchImages(); // Load images into cache immediately
+    prefetchImages();
     initList();
     showImage();
 };
