@@ -119,3 +119,135 @@ body {
     margin: 20px auto;
     display: block;
 }
+/* 1. LOAD THE FONT */
+@font-face {
+    font-family: 'MLS';
+    src: url('fonts/mls_2020/mls_2020-webfont.woff2') format('woff2'),
+         url('fonts/mls_2020/mls_2020-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 2. GENERAL STYLES */
+body {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    color: #000;
+    margin: 0;
+    padding: 20px;
+}
+
+.mlsfont {
+    font-family: 'MLS', sans-serif;
+    font-weight: normal;
+    font-size: 32px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* BATTLE STYLES */
+#mainTable {
+    width: 650px; /* Locks the battle area size */
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 10px 5px;
+}
+
+#leftField, #rightField {
+    width: 50%;
+    vertical-align: top;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.kit-thumb {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    transition: transform 0.2s;
+}
+
+#leftField:hover .kit-thumb, 
+#rightField:hover .kit-thumb {
+    transform: scale(1.05);
+}
+
+#progressBarContainer {
+    width: 100%;
+    max-width: 600px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    background-color: #ff0089;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+/* --- NEW RESULT STYLES --- */
+
+/* This container scrolls horizontally on mobile so the user can see the whole chart,
+   but the chart itself remains wide (800px) for the screenshot. */
+#resultsContainer {
+    overflow-x: auto; 
+    padding: 10px;
+}
+
+.result-poster {
+    display: grid;
+    /* FORCE 5 COLUMNS regardless of screen size */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 10px;
+    padding: 20px;
+    
+    /* FORCE FIXED WIDTH: This ensures the image is always high-res and poster-shaped */
+    width: 900px; 
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.result-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Thumbnails in the result list */
+.result-card .kit-thumb {
+    width: 100% !important;
+    height: 140px !important; /* Slightly smaller to fit 5 across nicely */
+    margin-bottom: 5px;
+}
+
+.rank-badge {
+    font-size: 1.2em;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.reveal-btn, .save-btn {
+    font-size: 24px;
+    padding: 15px 30px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px auto;
+    display: block;
+    font-family: 'MLS', sans-serif; /* Use your custom font for buttons too */
+}
