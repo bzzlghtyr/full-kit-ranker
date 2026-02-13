@@ -11,7 +11,7 @@
 
   <div id="loadingOverlay">
     <div style="margin-bottom:20px;">GENERATING RESULTS...</div>
-    <div style="font-size:16px;">Please wait while we stitch the image.</div>
+    <div style="font-size:16px;">This uses your device's graphics, so hang tight.</div>
   </div>
 
   <div style="text-align:center; padding: 20px;">
@@ -37,13 +37,9 @@
     <div id="progressBar"></div>
   </div>
 
-  <div id="resultsContainer"></div>
-  
   <div id="screenieButton" style="text-align:center; display:none; margin-top:20px;"></div>
 
   <script src="kitinfo.js"></script>
-  <script src="FileSaver.min.js"></script>
-  <script src="dom-to-image.min.js"></script>
   <script src="script.js"></script>
 
   <div style="position:fixed; bottom:20px; right:20px; z-index:999999;">
@@ -62,9 +58,9 @@
       document.getElementById("mainTable").style.display = "none";
       document.getElementById("progressBarContainer").style.display = "none";
       finishKit = 1;
-      var btnDiv = document.getElementById("screenieButton");
-      btnDiv.style.display = "block";
-      btnDiv.innerHTML = '<button onclick="generateAndShowImage()" class="reveal-btn">REVEAL RESULTS</button>';
+      
+      // We call the function directly here
+      generateCanvasPoster();
   }
   </script>
 
