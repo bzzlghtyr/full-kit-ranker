@@ -28,12 +28,12 @@ body {
 
 /* BATTLE STYLES */
 #mainTable {
-    width: 100%;
-    max-width: 800px;
+    width: 650px; /* Locked width to match the 0.6 zoom scale */
     margin: 0 auto;
     text-align: center;
+    border-collapse: separate;
+    border-spacing: 10px 5px; /* Restored original spacing */
 }
-
 #leftField, #rightField {
     width: 50%;
     vertical-align: top;
