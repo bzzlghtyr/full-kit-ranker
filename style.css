@@ -28,7 +28,7 @@ body {
 
 /* BATTLE STYLES */
 #mainTable {
-    width: 650px; /* Locked width for mobile zoom */
+    width: 650px;
     margin: 0 auto;
     text-align: center;
     border-collapse: separate;
@@ -71,16 +71,13 @@ body {
     transition: width 0.3s;
 }
 
-/* --- THE GHOST CONTAINER --- */
-/* By default, we hide it far off-screen. 
-   JS will briefly move it on-screen to capture it. */
+/* --- RESULT POSTER STYLES --- */
+/* This container will be momentarily visible during generation */
 #resultsContainer {
-    position: fixed;
-    left: -9999px;
-    top: 0;
-    width: 900px;
+    width: 900px; /* Fixed high-res width */
+    margin: 0 auto;
     background-color: #fff;
-    z-index: -1;
+    display: none; /* Hidden by default */
 }
 
 .result-poster {
@@ -118,7 +115,7 @@ body {
 }
 
 /* Button Styling */
-.reveal-btn, .save-btn {
+.reveal-btn {
     font-size: 24px;
     padding: 15px 30px;
     background-color: #000;
@@ -129,4 +126,21 @@ body {
     margin: 30px auto;
     display: block;
     font-family: 'MLS', sans-serif;
+}
+
+/* Loading Overlay (The "Curtain") */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'MLS', sans-serif;
+    font-size: 24px;
 }
