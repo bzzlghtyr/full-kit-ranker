@@ -165,9 +165,12 @@ function sortList(flag) {
         
         finishKit = 1;
         
-        var btnDiv = document.getElementById("screenieButton");
-        btnDiv.style.display = "block";
-        btnDiv.innerHTML = '<button onclick="generateAndShowImage()" class="reveal-btn">REVEAL RESULTS</button>';
+        // Hide Battle UI
+        document.getElementById("mainTable").style.display = "none";
+        document.getElementById("screenieButton").style.display = "none";
+        
+        // Trigger Canvas Generation
+        generateCanvasPoster();
         
     } else {
         showImage();
@@ -197,9 +200,9 @@ function showImage() {
     numQuestion++;
 }
 
-// --- GENERATION LOGIC ---
-function generateAndShowImage() {
-    // 1. Show Loading Curtain
+// --- NEW CANVAS GENERATION ENGINE ---
+function generateCanvasPoster() {
+    // Show Loading Overlay
     var overlay = document.getElementById('loadingOverlay');
     overlay.style.display = 'flex';
 
@@ -207,10 +210,6 @@ function generateAndShowImage() {
         item.replace("New England", "N.E.")
             .replace("Vancouver Whitecaps FC", "Van. Whitecaps")
     );
-
-    var ranking = 1;
-    var sameRank = 1;
-    var i;
 
     var colors = [
         "#00ff57", "#3ef846", "#56f034", "#67e91d", "#75e200", "#80da00", "#89d300", 
@@ -220,24 +219,136 @@ function generateAndShowImage() {
         "#af0404", "#800000"
     ];
 
-    // Build the poster HTML
-    var str = '<div class="mlsfont" style="margin-bottom:10px;">2026 MLS Kit Rankings</div>';
-    str += '<div class="result-poster">';
+    // Canvas Settings
+    var cols = 5;
+    var rows = Math.ceil(processedNamMember.length / cols);
+    var cardWidth = 180;
+    var cardHeight = 260; // Enough space for top bar, rank, image, text
+    var gap = 10;
+    var padding = 20;
+    var headerHeight = 60;
+    
+    var canvasWidth = (cols * cardWidth) + ((cols - 1) * gap) + (padding * 2);
+    var canvasHeight = headerHeight + (rows * cardHeight) + ((rows - 1) * gap) + (padding * 2);
 
-    for (i = 0; i < processedNamMember.length; i++) {
-        var memberInfo = processedNamMember[lstMember[0][i]].split("|");
-        var imgTag = memberInfo[0];
-        var teamName = memberInfo[1];
-        var kitName = memberInfo[2];
-        var rankColor = colors[ranking - 1] || "#ccc"; 
+    var canvas = document.createElement('canvas');
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    var ctx = canvas.getContext('2d');
 
-        str += '<div class="result-card" style="border-top: 10px solid ' + rankColor + ';">';
-        str += '  <span class="rank-badge">#' + ranking + '</span>';
-        str +=    imgTag; 
-        str += '  <span style="font-weight:bold; font-size:14px; margin-bottom:2px;">' + teamName + '</span>';
-        str += '  <span style="font-size:11px; font-style:italic; color:#555;">' + kitName + '</span>';
-        str += '</div>';
+    // Draw Background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
+    // Draw Header
+    ctx.fillStyle = "#000000";
+    ctx.font = "32px MLS, sans-serif"; // Tries to use MLS font, falls back to sans
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("2026 MLS KIT RANKINGS", canvasWidth / 2, padding + (headerHeight / 2) - 10);
+
+    // HELPER: Load Image Promise
+    function loadImage(src) {
+        return new Promise((resolve, reject) => {
+            var img = new Image();
+            img.crossOrigin = "Anonymous"; 
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error("Failed to load " + src));
+            img.src = src;
+        });
+    }
+
+    // HELPER: Draw Wrapped Text
+    function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+        var lines = [];
+        for(var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + ' ';
+          var metrics = ctx.measureText(testLine);
+          var testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            lines.push(line);
+            line = words[n] + ' ';
+          } else {
+            line = testLine;
+          }
+        }
+        lines.push(line);
+        
+        for(var k=0; k<lines.length; k++){
+            ctx.fillText(lines[k], x, y + (k*lineHeight));
+        }
+    }
+
+    // Prepare Tasks
+    var tasks = [];
+    var ranking = 1;
+    var sameRank = 1;
+
+    for (var i = 0; i < processedNamMember.length; i++) {
+        (function(index, rank) {
+            var dataRaw = processedNamMember[lstMember[0][index]];
+            
+            // Extract Data manually from string
+            // Format: "<img src='path'> |<b>Name</b>|<i>Kit</i>|"
+            var parts = dataRaw.split('|');
+            var imgTag = parts[0];
+            var imgUrl = imgTag.match(/src=['"](.*?)['"]/)[1];
+            var teamName = parts[1].replace(/<\/?b>/g, "");
+            var kitName = parts[2].replace(/<\/?i>/g, "");
+            var rankColor = colors[rank - 1] || "#ccc";
+
+            var col = index % cols;
+            var row = Math.floor(index / cols);
+            
+            var x = padding + (col * (cardWidth + gap));
+            var y = padding + headerHeight + (row * (cardHeight + gap));
+
+            // Push the drawing task
+            tasks.push(
+                loadImage(imgUrl).then(img => {
+                    // 1. Draw Card Background (optional border/shadow effect)
+                    // ctx.strokeStyle = "#e0e0e0";
+                    // ctx.strokeRect(x, y, cardWidth, cardHeight);
+
+                    // 2. Draw Top Color Bar
+                    ctx.fillStyle = rankColor;
+                    ctx.fillRect(x, y, cardWidth, 10);
+
+                    // 3. Draw Rank #
+                    ctx.fillStyle = "#333333";
+                    ctx.font = "bold 20px sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.fillText("#" + rank, x + cardWidth/2, y + 40);
+
+                    // 4. Draw Image (Scaled to fit 140px height max)
+                    var imgH = 150;
+                    var imgW = cardWidth - 20;
+                    // Maintain aspect ratio
+                    var scale = Math.min(imgW / img.width, imgH / img.height);
+                    var drawW = img.width * scale;
+                    var drawH = img.height * scale;
+                    var drawX = x + (cardWidth - drawW) / 2;
+                    var drawY = y + 55 + (imgH - drawH) / 2; // Center in the image area
+
+                    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+
+                    // 5. Draw Team Name
+                    ctx.fillStyle = "#000000";
+                    ctx.font = "bold 14px sans-serif";
+                    ctx.fillText(teamName, x + cardWidth/2, y + 225);
+
+                    // 6. Draw Kit Name
+                    ctx.fillStyle = "#666666";
+                    ctx.font = "italic 11px sans-serif";
+                    ctx.fillText(kitName, x + cardWidth/2, y + 245);
+                })
+            );
+
+        })(i, ranking);
+
+        // Rank Logic
         if (i < processedNamMember.length - 1) {
             if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
                 sameRank++;
@@ -247,82 +358,56 @@ function generateAndShowImage() {
             }
         }
     }
-    str += '</div>';
 
-    var resultsContainer = document.getElementById("resultsContainer");
-    resultsContainer.innerHTML = str;
-    
-    // 2. Un-hide the container so it renders (behind the curtain)
-    resultsContainer.style.display = 'block';
-
-    // 3. WAIT 500ms for images to paint on mobile
-    setTimeout(function() {
-        screencap();
-    }, 500);
+    // Execute all draws then show result
+    Promise.all(tasks).then(() => {
+        var dataUrl = canvas.toDataURL("image/png");
+        overlay.style.display = 'none';
+        showModal(dataUrl);
+    }).catch(err => {
+        console.error(err);
+        overlay.style.display = 'none';
+        alert("Error generating image.");
+    });
 }
 
-function screencap() {
-    var node = document.getElementById('resultsContainer'); 
-    var overlay = document.getElementById('loadingOverlay');
+function showModal(dataUrl) {
+    var modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.zIndex = '100000'; 
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.flexDirection = 'column';
     
-    var options = {
-        bgcolor: '#ffffff',
-        width: 900, 
-        height: node.scrollHeight
-    };
+    var img = new Image();
+    img.src = dataUrl;
+    
+    // Fit to screen visually, but source is high-res
+    img.style.maxWidth = '95%';
+    img.style.maxHeight = '80vh'; 
+    img.style.objectFit = 'contain'; 
+    img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
+    img.style.borderRadius = '4px';
 
-    domtoimage.toPng(node, options)
-        .then(function (dataUrl) {
-            // Hide the raw HTML container again
-            node.style.display = 'none';
-            // Hide the loading curtain
-            overlay.style.display = 'none';
+    var txt = document.createElement('div');
+    txt.innerHTML = "Right click (or long press) to save.<br>Click anywhere to close.";
+    txt.style.color = "#fff";
+    txt.style.fontFamily = "sans-serif";
+    txt.style.textAlign = "center";
+    txt.style.marginBottom = "15px";
+    txt.style.fontSize = "14px";
 
-            // --- BUILD MODAL ---
-            var modal = document.createElement('div');
-            modal.style.position = 'fixed';
-            modal.style.zIndex = '100000'; 
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.width = '100%';
-            modal.style.height = '100%';
-            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
-            modal.style.display = 'flex';
-            modal.style.alignItems = 'center';
-            modal.style.justifyContent = 'center';
-            modal.style.flexDirection = 'column';
-            
-            var img = new Image();
-            img.src = dataUrl;
-            
-            // Mobile-Friendly Sizing
-            img.style.maxWidth = '95%';
-            img.style.maxHeight = '80vh'; 
-            img.style.width = 'auto';
-            img.style.height = 'auto';
-            img.style.objectFit = 'contain'; 
-            img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
-            img.style.borderRadius = '4px';
-
-            var txt = document.createElement('div');
-            txt.innerHTML = "Right click (or long press) to save.<br>Click anywhere to close.";
-            txt.style.color = "#fff";
-            txt.style.fontFamily = "sans-serif";
-            txt.style.textAlign = "center";
-            txt.style.marginBottom = "15px";
-            txt.style.fontSize = "14px";
-
-            modal.appendChild(txt);
-            modal.appendChild(img);
-            
-            modal.onclick = function() { document.body.removeChild(modal); };
-            document.body.appendChild(modal);
-        })
-        .catch(function (error) {
-            console.error(error);
-            overlay.style.display = 'none'; // Hide overlay if error
-            alert("Image generation failed. Please try again.");
-        });
+    modal.appendChild(txt);
+    modal.appendChild(img);
+    
+    modal.onclick = function() { document.body.removeChild(modal); };
+    document.body.appendChild(modal);
 }
 
 window.onload = function() {
