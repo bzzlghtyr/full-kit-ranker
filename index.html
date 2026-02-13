@@ -9,6 +9,11 @@
 </head>
 <body>
 
+  <div id="loadingOverlay">
+    <div style="margin-bottom:20px;">GENERATING RESULTS...</div>
+    <div style="font-size:16px;">Please wait while we stitch the image.</div>
+  </div>
+
   <div style="text-align:center; padding: 20px;">
     <p class="mlsfont">MLS Full Kit Ranker</p>
     <p style="font-size:16px;">There are 2 kits in view below. Select the one you prefer. Repeat.</p>
@@ -43,7 +48,7 @@
 
   <div style="position:fixed; bottom:20px; right:20px; z-index:999999;">
     <button onclick="debugAutoSort()" style="padding:15px; background:red; color:white; border:2px solid white; border-radius:8px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-      ⚡ DEBUG: Auto-Sort
+      ⚡ DEBUG
     </button>
   </div>
 
@@ -62,5 +67,6 @@
       btnDiv.innerHTML = '<button onclick="generateAndShowImage()" class="reveal-btn">REVEAL RESULTS</button>';
   }
   </script>
-  </body>
+
+</body>
 </html>
