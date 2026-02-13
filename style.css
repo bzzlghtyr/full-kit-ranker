@@ -1,15 +1,15 @@
-/* 1. LOAD THE FONT FILE */
-/* You must have a file named MLS-Bold.ttf (or similar) in your folder */
+/* 1. LOAD THE FONT - CORRECTED PATHS */
 @font-face {
     font-family: 'MLS';
-    src: url('MLS.ttf') format('truetype'); /* Update filename here if yours is different */
+    src: url('fonts/mls_2020/mls_2020-webfont.woff2') format('woff2'),
+         url('fonts/mls_2020/mls_2020-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 /* 2. GENERAL STYLES */
 body {
-    font-family: sans-serif; /* Default fallback */
+    font-family: sans-serif;
     background-color: #ffffff;
     color: #000;
     margin: 0;
@@ -18,8 +18,8 @@ body {
 
 /* User's Custom Font Class */
 .mlsfont {
-    font-family: 'MLS', sans-serif; 
-    font-weight: bold;
+    font-family: 'MLS', sans-serif;
+    font-weight: normal; /* The font file likely handles the weight */
     font-size: 32px;
     text-transform: uppercase;
     text-align: center;
@@ -41,7 +41,7 @@ body {
     padding: 10px;
 }
 
-/* The "Perfect Resizing" - Keeps battle images at 300px */
+/* BATTLE IMAGES (300px) */
 .kit-thumb {
     width: 300px;
     height: 300px;
@@ -71,7 +71,7 @@ body {
     transition: width 0.3s;
 }
 
-/* RESULTS GRID (Overrides kit-thumb size for the list) */
+/* RESULTS GRID */
 .results-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -94,7 +94,7 @@ body {
     align-items: center;
 }
 
-/* Override .kit-thumb size INSIDE the results grid only */
+/* RESULT IMAGES (Thumbnail size) */
 .result-card .kit-thumb {
     width: 100% !important;
     height: 160px !important;
