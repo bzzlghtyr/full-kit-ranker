@@ -147,10 +147,18 @@ function sortList(flag) {
         str = "Matchup #" + (numQuestion - 1) + "<br>100% sorted.";
         document.getElementById("matchupNumber").innerHTML = str;
         document.getElementById("progressBar").style.display = "none";
+        
+        // Hide the battle interface
         document.getElementById("leftField").style.display = "none";
         document.getElementById("rightField").style.display = "none";
+        
         finishKit = 1;
-        showResult();
+        
+        // --- NEW CHANGE: SHOW REVEAL BUTTON INSTEAD OF RESULTS ---
+        var btnDiv = document.getElementById("screenieButton");
+        btnDiv.style.display = "block";
+        btnDiv.innerHTML = '<button onclick="showResult()" class="reveal-btn">REVEAL RESULTS</button>';
+        
     } else {
         showImage();
     }
@@ -164,7 +172,6 @@ function showImage() {
 
     var str0 = "Matchup #" + numQuestion + "<br>" + completionPercentage + "% sorted.";
     
-    // Parses data from kitinfo.js (Image | Name | Kit)
     var str1 = namMember[lstMember[cmp1][head1]].split("|")[0];
     var str2 = "<br><span style='font-size:18px; font-weight:bold;'>" + namMember[lstMember[cmp1][head1]].split("|")[1] + "</span>";
     var str3 = "<br><span style='font-size:12px; color:#555;'>" + namMember[lstMember[cmp1][head1]].split("|")[2] + "</span>";
@@ -198,9 +205,11 @@ function showResult() {
         "#af0404", "#800000"
     ];
 
-    var str = '<div class="mlsfont">2026 MLS Kit Rankings</div>';
+    // Use the custom font for the title inside the generated image
+    var str = '<div class="mlsfont" style="margin-bottom:10px;">2026 MLS Kit Rankings</div>';
     
-    str += '<div class="results-grid" id="capture-area">';
+    // Switch to the fixed-width poster class
+    str += '<div class="result-poster" id="capture-area">';
 
     for (i = 0; i < processedNamMember.length; i++) {
         var memberInfo = processedNamMember[lstMember[0][i]].split("|");
@@ -211,7 +220,7 @@ function showResult() {
 
         str += '<div class="result-card" style="border-top: 10px solid ' + rankColor + ';">';
         str += '  <span class="rank-badge">#' + ranking + '</span>';
-        str +=    imgTag; // This contains class="kit-thumb" which CSS will resize
+        str +=    imgTag; 
         str += '  <span style="font-weight:bold; font-size:14px; margin-bottom:2px;">' + teamName + '</span>';
         str += '  <span style="font-size:11px; font-style:italic; color:#555;">' + kitName + '</span>';
         str += '</div>';
@@ -231,15 +240,23 @@ function showResult() {
     resultsContainer.style.display = "block";
     resultsContainer.innerHTML = str;
 
+    // Switch the button from "REVEAL" to "SAVE IMAGE"
     var btnDiv = document.getElementById("screenieButton");
-    btnDiv.style.display = "block";
-    btnDiv.innerHTML = '<button onclick="screencap()" class="save-btn">Save Image</button>';
+    btnDiv.innerHTML = '<button onclick="screencap()" class="save-btn">SAVE IMAGE</button>';
 }
 
 function screencap() {
+    // Capture the RESULTS CONTAINER, which contains the poster
     var node = document.getElementById('resultsContainer'); 
     
-    domtoimage.toPng(node, { bgcolor: '#ffffff' })
+    // Config: Force white background, ensure high quality
+    var options = {
+        bgcolor: '#ffffff',
+        width: 950, // Force the capture width to capture the full poster
+        height: node.scrollHeight // Capture full height
+    };
+
+    domtoimage.toPng(node, options)
         .then(function (dataUrl) {
             var modal = document.createElement('div');
             modal.style.position = 'fixed';
@@ -248,7 +265,7 @@ function screencap() {
             modal.style.left = '0';
             modal.style.width = '100%';
             modal.style.height = '100%';
-            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
             modal.style.display = 'flex';
             modal.style.alignItems = 'center';
             modal.style.justifyContent = 'center';
@@ -262,10 +279,11 @@ function screencap() {
             img.style.marginBottom = '20px';
 
             var txt = document.createElement('div');
-            txt.innerHTML = "Right click to save image. Click anywhere to close.";
+            txt.innerHTML = "Right click (or hold) to save.<br>Click anywhere to close.";
             txt.style.color = "#fff";
             txt.style.fontFamily = "sans-serif";
-            txt.style.marginBottom = "10px";
+            txt.style.textAlign = "center";
+            txt.style.marginBottom = "15px";
 
             modal.appendChild(txt);
             modal.appendChild(img);
@@ -275,6 +293,7 @@ function screencap() {
         })
         .catch(function (error) {
             console.error(error);
+            alert("Screenshot failed. Please try on a desktop computer.");
         });
 }
 
