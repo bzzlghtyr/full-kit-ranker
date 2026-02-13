@@ -1,3 +1,13 @@
+/* 1. LOAD THE FONT FILE */
+/* You must have a file named MLS-Bold.ttf (or similar) in your folder */
+@font-face {
+    font-family: 'MLS';
+    src: url('MLS.ttf') format('truetype'); /* Update filename here if yours is different */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 2. GENERAL STYLES */
 body {
     font-family: sans-serif; /* Default fallback */
     background-color: #ffffff;
@@ -8,7 +18,7 @@ body {
 
 /* User's Custom Font Class */
 .mlsfont {
-    font-family: 'MLS', sans-serif; /* Assumes you have the font loaded locally */
+    font-family: 'MLS', sans-serif; 
     font-weight: bold;
     font-size: 32px;
     text-transform: uppercase;
