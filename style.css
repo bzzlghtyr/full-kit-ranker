@@ -1,124 +1,3 @@
-/* 1. LOAD THE FONT - CORRECTED PATHS */
-@font-face {
-    font-family: 'MLS';
-    src: url('fonts/mls_2020/mls_2020-webfont.woff2') format('woff2'),
-         url('fonts/mls_2020/mls_2020-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-/* 2. GENERAL STYLES */
-body {
-    font-family: sans-serif;
-    background-color: #ffffff;
-    color: #000;
-    margin: 0;
-    padding: 20px;
-}
-
-/* User's Custom Font Class */
-.mlsfont {
-    font-family: 'MLS', sans-serif;
-    font-weight: normal; /* The font file likely handles the weight */
-    font-size: 32px;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* BATTLE STYLES */
-#mainTable {
-    width: 650px; /* Locked width to match the 0.6 zoom scale */
-    margin: 0 auto;
-    text-align: center;
-    border-collapse: separate;
-    border-spacing: 10px 5px; /* Restored original spacing */
-}
-#leftField, #rightField {
-    width: 50%;
-    vertical-align: top;
-    cursor: pointer;
-    padding: 10px;
-}
-
-/* BATTLE IMAGES (300px) */
-.kit-thumb {
-    width: 300px;
-    height: 300px;
-    object-fit: contain;
-    transition: transform 0.2s;
-}
-
-#leftField:hover .kit-thumb, 
-#rightField:hover .kit-thumb {
-    transform: scale(1.05);
-}
-
-#progressBarContainer {
-    width: 100%;
-    max-width: 600px;
-    height: 20px;
-    background-color: #eee;
-    border-radius: 10px;
-    margin: 20px auto;
-    overflow: hidden;
-}
-
-#progressBar {
-    height: 100%;
-    background-color: #ff0089;
-    width: 0%;
-    transition: width 0.3s;
-}
-
-/* RESULTS GRID */
-.results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #fff;
-}
-
-.result-card {
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* RESULT IMAGES (Thumbnail size) */
-.result-card .kit-thumb {
-    width: 100% !important;
-    height: 160px !important;
-    margin-bottom: 8px;
-}
-
-.rank-badge {
-    font-size: 1.5em;
-    font-weight: 800;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.save-btn {
-    font-size: 18px;
-    padding: 12px 24px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 20px auto;
-    display: block;
-}
 /* 1. LOAD THE FONT */
 @font-face {
     font-family: 'MLS';
@@ -148,7 +27,7 @@ body {
 
 /* BATTLE STYLES */
 #mainTable {
-    width: 650px; /* Locks the battle area size */
+    width: 650px;
     margin: 0 auto;
     text-align: center;
     border-collapse: separate;
@@ -191,26 +70,25 @@ body {
     transition: width 0.3s;
 }
 
-/* --- NEW RESULT STYLES --- */
-
-/* This container scrolls horizontally on mobile so the user can see the whole chart,
-   but the chart itself remains wide (800px) for the screenshot. */
+/* --- GHOST CONTAINER (OFF-SCREEN) --- */
+/* This is where the magic happens. It renders the full 5-wide poster
+   off-screen so the tool can snapshot it, but the user never sees this list. */
 #resultsContainer {
-    overflow-x: auto; 
-    padding: 10px;
+    position: fixed;
+    left: -10000px; /* Send it far away */
+    top: 0;
+    width: 900px; /* Force the high-res width */
+    z-index: -999;
 }
 
 .result-poster {
     display: grid;
-    /* FORCE 5 COLUMNS regardless of screen size */
-    grid-template-columns: repeat(5, 1fr); 
+    grid-template-columns: repeat(5, 1fr); /* 5 Columns Wide */
     gap: 10px;
     padding: 20px;
-    
-    /* FORCE FIXED WIDTH: This ensures the image is always high-res and poster-shaped */
-    width: 900px; 
-    margin: 0 auto;
+    width: 100%; 
     background-color: #fff;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
 }
 
 .result-card {
@@ -219,16 +97,14 @@ body {
     border-radius: 8px;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Thumbnails in the result list */
 .result-card .kit-thumb {
     width: 100% !important;
-    height: 140px !important; /* Slightly smaller to fit 5 across nicely */
+    height: 140px !important;
     margin-bottom: 5px;
 }
 
@@ -239,7 +115,8 @@ body {
     margin-bottom: 5px;
 }
 
-.reveal-btn, .save-btn {
+/* Button Styling */
+.reveal-btn {
     font-size: 24px;
     padding: 15px 30px;
     background-color: #000;
@@ -249,5 +126,5 @@ body {
     cursor: pointer;
     margin: 30px auto;
     display: block;
-    font-family: 'MLS', sans-serif; /* Use your custom font for buttons too */
+    font-family: 'MLS', sans-serif;
 }
