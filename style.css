@@ -8,6 +8,11 @@
 }
 
 /* 2. GENERAL STYLES */
+html {
+    /* FIX: Disables double-tap zoom & removes 300ms tap delay globally */
+    touch-action: manipulation; 
+}
+
 body {
     font-family: sans-serif;
     background-color: #ffffff;
@@ -15,6 +20,7 @@ body {
     margin: 0;
     padding: 20px;
     min-height: 100vh;
+    touch-action: manipulation; /* Reinforce specifically on body */
 }
 
 .mlsfont {
@@ -40,6 +46,8 @@ body {
     vertical-align: top;
     cursor: pointer;
     padding: 10px;
+    /* FIX: Ensures rapid tapping on kits doesn't trigger zoom */
+    touch-action: manipulation; 
 }
 
 .kit-thumb {
@@ -87,4 +95,20 @@ body {
     font-family: 'MLS', sans-serif;
     font-size: 24px;
     text-align: center;
+}
+
+/* Button Styling */
+.reveal-btn, .save-btn, button {
+    font-size: 24px;
+    padding: 15px 30px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px auto;
+    display: block;
+    font-family: 'MLS', sans-serif;
+    /* FIX: Ensures buttons respond instantly */
+    touch-action: manipulation;
 }
