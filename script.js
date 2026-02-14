@@ -1,7 +1,9 @@
 // --- SUPABASE SETUP ---
 const SUPABASE_URL = 'https://vwzibkmtlnqyjrmqvjcp.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_rK690mconY77dTIDtxFHcA_S5oLuTAe';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// FIX: Renamed to 'supabaseDb' to prevent naming conflicts that crash the page
+const supabaseDb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Define what list is currently being ranked
 const CURRENT_TEMPLATE_ID = 'mls_2026'; 
@@ -168,10 +170,8 @@ function sortList(flag) {
     }
 
     if (cmp1 < 0) {
-        // Update progress bar
         document.getElementById("matchupNumber").innerHTML = "Matchup #" + (numQuestion - 1) + "<br>100% sorted.";
         
-        // Hide the Battle UI
         document.getElementById("progressBarContainer").style.display = "none";
         document.getElementById("mainTable").style.display = "none";
         
@@ -212,7 +212,6 @@ function showImage() {
 }
 
 // --- DEBUG FUNCTION ---
-// Attached to the red button in index.html
 function debugAutoSort() {
     console.log("Debug: Force finishing...");
     lstMember[0] = [];
@@ -229,7 +228,6 @@ function debugAutoSort() {
     // --- 2. GENERATE IMAGE ---
     generateCanvasPoster();
 }
-
 
 // --- DATABASE SUBMISSION LOGIC ---
 async function captureAndSubmitResults(isDebug = false) {
@@ -275,7 +273,8 @@ async function captureAndSubmitResults(isDebug = false) {
 
     // 2. Send to Supabase Database
     try {
-        const { data, error } = await supabase.rpc('submit_ranking', {
+        // FIX: Using 'supabaseDb' here
+        const { data, error } = await supabaseDb.rpc('submit_ranking', {
             p_payload: finalKitRankingsData,
             p_template_id: CURRENT_TEMPLATE_ID,
             p_is_debug: isDebug
