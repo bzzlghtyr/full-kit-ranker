@@ -3,6 +3,9 @@ const SUPABASE_URL = 'https://vwzibkmtlnqyjrmqvjcp.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_rK690mconY77dTIDtxFHcA_S5oLuTAe';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// Define what list is currently being ranked
+const CURRENT_TEMPLATE_ID = 'mls_2026'; 
+
 // Global variable to hold the final data
 var finalKitRankingsData = [];
 
