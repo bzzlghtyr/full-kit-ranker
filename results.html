@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Consensus - Full Kit Ranker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    /* A little extra styling for the results page layout */
+    .results-header { text-align: center; padding: 20px; }
+    .stats-text { font-size: 16px; color: #555; margin-bottom: 20px; }
+    .avg-badge { font-size: 14px; font-weight: bold; color: #ff0089; margin-top: 5px; }
+  </style>
+</head>
+<body>
+
+  <div class="results-header">
+    <p class="mlsfont">2026 MLS Community Rankings</p>
+    <p class="stats-text" id="voteCountDisplay">Loading community votes...</p>
+    <a href="index.html" style="color: #000; text-decoration: underline; font-family: sans-serif;">&larr; Back to Ranker</a>
+  </div>
+
+  <div id="communityResults" class="result-poster" style="margin: 0 auto; max-width: 1000px;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="results.js"></script>
+
+</body>
+</html>
