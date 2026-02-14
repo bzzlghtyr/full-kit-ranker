@@ -7,21 +7,154 @@
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <style>
-    /* A little extra styling for the results page layout */
-    .results-header { text-align: center; padding: 20px; }
-    .stats-text { font-size: 16px; color: #555; margin-bottom: 20px; }
-    .avg-badge { font-size: 14px; font-weight: bold; color: #ff0089; margin-top: 5px; }
+    /* LEADERBOARD SPECIFIC STYLES */
+    body {
+        background-color: #f8f9fa; /* Slightly off-white background to make cards pop */
+    }
+
+    .results-header { 
+        text-align: center; 
+        padding: 40px 20px 20px 20px; 
+    }
+    
+    .stats-text { 
+        font-size: 16px; 
+        color: #666; 
+        margin-bottom: 20px; 
+        font-weight: bold;
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+        border: 2px solid #000;
+        padding: 8px 16px;
+        border-radius: 5px;
+        transition: all 0.2s;
+    }
+    
+    .back-link:hover {
+        background-color: #000;
+        color: #fff;
+    }
+
+    /* The Main List Container */
+    .leaderboard-container {
+        max-width: 800px; /* Keeps it readable on large screens */
+        margin: 0 auto;
+        padding: 0 20px 50px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* Space between rows */
+    }
+
+    /* Individual Row */
+    .lb-row {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border-radius: 8px;
+        padding: 12px 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .lb-row:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Left Side: Rank and Image */
+    .lb-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        min-width: 120px;
+    }
+
+    .lb-rank {
+        font-size: 24px;
+        font-weight: 900;
+        color: #333;
+        min-width: 45px;
+    }
+
+    .lb-thumb {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+    }
+
+    /* Middle: Text Info */
+    .lb-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 10px;
+    }
+
+    .lb-team {
+        font-size: 18px;
+        font-weight: bold;
+        color: #111;
+        margin-bottom: 4px;
+    }
+
+    .lb-kit {
+        font-size: 13px;
+        color: #777;
+        font-style: italic;
+    }
+
+    /* Right Side: Score Badge */
+    .lb-score-container {
+        text-align: right;
+        min-width: 80px;
+    }
+
+    .lb-score-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: #888;
+        letter-spacing: 1px;
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
+
+    .lb-score-value {
+        font-size: 22px;
+        font-weight: 900;
+        color: #000;
+        background: #f0f0f0;
+        padding: 4px 12px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    /* Mobile Adjustments */
+    @media (max-width: 500px) {
+        .lb-row { padding: 10px; gap: 10px; }
+        .lb-left { gap: 10px; min-width: auto; }
+        .lb-rank { font-size: 20px; min-width: 35px; }
+        .lb-thumb { width: 50px; height: 50px; }
+        .lb-team { font-size: 16px; }
+        .lb-score-value { font-size: 18px; padding: 4px 8px; }
+    }
   </style>
 </head>
 <body>
 
   <div class="results-header">
-    <p class="mlsfont">2026 MLS Community Rankings</p>
-    <p class="stats-text" id="voteCountDisplay">Loading community votes...</p>
-    <a href="index.html" style="color: #000; text-decoration: underline; font-family: sans-serif;">&larr; Back to Ranker</a>
+    <div class="mlsfont">2026 MLS Community Rankings</div>
+    <div class="stats-text" id="voteCountDisplay">Loading community votes...</div>
+    <a href="index.html" class="back-link">&larr; Back to Ranker</a>
   </div>
 
-  <div id="communityResults" class="result-poster" style="margin: 0 auto; max-width: 1000px;"></div>
+  <div id="communityResults" class="leaderboard-container"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="results.js"></script>
