@@ -9,6 +9,7 @@ const CURRENT_TEMPLATE_ID = 'mls_2026';
 // Global variable to hold the final data
 var finalKitRankingsData = [];
 
+// --- SORTING VARIABLES ---
 var lstMember = new Array();
 var parent = new Array();
 var equal = new Array();
@@ -84,7 +85,6 @@ function initList() {
 
 function sortList(flag) {
     var i;
-    var str;
 
     if (flag < 0) {
         rec[nrec] = lstMember[cmp1][head1];
@@ -168,22 +168,19 @@ function sortList(flag) {
     }
 
     if (cmp1 < 0) {
-        str = "Matchup #" + (numQuestion - 1) + "<br>100% sorted.";
-        document.getElementById("matchupNumber").innerHTML = str;
-        document.getElementById("progressBar").style.display = "none";
-        document.getElementById("leftField").style.display = "none";
-        document.getElementById("rightField").style.display = "none";
+        // Update progress bar
+        document.getElementById("matchupNumber").innerHTML = "Matchup #" + (numQuestion - 1) + "<br>100% sorted.";
+        
+        // Hide the Battle UI
+        document.getElementById("progressBarContainer").style.display = "none";
+        document.getElementById("mainTable").style.display = "none";
         
         finishKit = 1;
         
-        // Hide Battle UI
-        document.getElementById("mainTable").style.display = "none";
-        document.getElementById("screenieButton").style.display = "none";
-
-    // ---> FIRE IT OFF TO THE DATABASE <---
+        // --- 1. SEND TO DATABASE (Standard Mode) ---
         captureAndSubmitResults(false);
         
-        // Trigger Canvas Generation
+        // --- 2. GENERATE IMAGE ---
         generateCanvasPoster();
         
     } else {
@@ -214,226 +211,29 @@ function showImage() {
     numQuestion++;
 }
 
-// --- NEW CANVAS GENERATION ENGINE ---
-function generateCanvasPoster() {
-    // Show Loading Overlay
-    var overlay = document.getElementById('loadingOverlay');
-    overlay.style.display = 'flex';
-
-    var processedNamMember = namMember.map(item => 
-        item.replace("New England", "N.E.")
-            .replace("Vancouver Whitecaps FC", "Van. Whitecaps")
-    );
-
-    var colors = [
-        "#00ff57", "#3ef846", "#56f034", "#67e91d", "#75e200", "#80da00", "#89d300", 
-        "#91cb00", "#99c300", "#9fbc00", "#a4b400", "#a9ac00", "#aea400", "#b19c00", 
-        "#b49400", "#b78c00", "#b98400", "#bb7b00", "#bc7300", "#bd6a00", "#bd6200", 
-        "#bd5900", "#bc5000", "#bb4700", "#ba3d00", "#b83300", "#b52700", "#b21a00", 
-        "#af0404", "#800000"
-    ];
-
-    // Canvas Settings
-    var cols = 5;
-    var rows = Math.ceil(processedNamMember.length / cols);
-    var cardWidth = 180;
-    var cardHeight = 260; // Enough space for top bar, rank, image, text
-    var gap = 10;
-    var padding = 20;
-    var headerHeight = 60;
+// --- DEBUG FUNCTION ---
+// Attached to the red button in index.html
+function debugAutoSort() {
+    console.log("Debug: Force finishing...");
+    lstMember[0] = [];
+    for (var i = 0; i < namMember.length; i++) {
+        lstMember[0][i] = i; 
+    }
+    document.getElementById("mainTable").style.display = "none";
+    document.getElementById("progressBarContainer").style.display = "none";
+    finishKit = 1;
     
-    var canvasWidth = (cols * cardWidth) + ((cols - 1) * gap) + (padding * 2);
-    var canvasHeight = headerHeight + (rows * cardHeight) + ((rows - 1) * gap) + (padding * 2);
+    // --- 1. SEND TO DATABASE (Debug Mode) ---
+    captureAndSubmitResults(true);
 
-    var canvas = document.createElement('canvas');
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    var ctx = canvas.getContext('2d');
-
-    // Draw Background
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-
-    // Draw Header
-    ctx.fillStyle = "#000000";
-    ctx.font = "32px MLS, sans-serif"; // Tries to use MLS font, falls back to sans
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("2026 MLS KIT RANKINGS", canvasWidth / 2, padding + (headerHeight / 2) - 10);
-
-    // HELPER: Load Image Promise
-    function loadImage(src) {
-        return new Promise((resolve, reject) => {
-            var img = new Image();
-            img.crossOrigin = "Anonymous"; 
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error("Failed to load " + src));
-            img.src = src;
-        });
-    }
-
-    // HELPER: Draw Wrapped Text
-    function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
-        var words = text.split(' ');
-        var line = '';
-        var lines = [];
-        for(var n = 0; n < words.length; n++) {
-          var testLine = line + words[n] + ' ';
-          var metrics = ctx.measureText(testLine);
-          var testWidth = metrics.width;
-          if (testWidth > maxWidth && n > 0) {
-            lines.push(line);
-            line = words[n] + ' ';
-          } else {
-            line = testLine;
-          }
-        }
-        lines.push(line);
-        
-        for(var k=0; k<lines.length; k++){
-            ctx.fillText(lines[k], x, y + (k*lineHeight));
-        }
-    }
-
-    // Prepare Tasks
-    var tasks = [];
-    var ranking = 1;
-    var sameRank = 1;
-
-    for (var i = 0; i < processedNamMember.length; i++) {
-        (function(index, rank) {
-            var dataRaw = processedNamMember[lstMember[0][index]];
-            
-            // Extract Data manually from string
-            // Format: "<img src='path'> |<b>Name</b>|<i>Kit</i>|"
-            var parts = dataRaw.split('|');
-            var imgTag = parts[0];
-            var imgUrl = imgTag.match(/src=['"](.*?)['"]/)[1];
-            var teamName = parts[1].replace(/<\/?b>/g, "");
-            var kitName = parts[2].replace(/<\/?i>/g, "");
-            var rankColor = colors[rank - 1] || "#ccc";
-
-            var col = index % cols;
-            var row = Math.floor(index / cols);
-            
-            var x = padding + (col * (cardWidth + gap));
-            var y = padding + headerHeight + (row * (cardHeight + gap));
-
-            // Push the drawing task
-            tasks.push(
-                loadImage(imgUrl).then(img => {
-                    // 1. Draw Card Background (optional border/shadow effect)
-                    // ctx.strokeStyle = "#e0e0e0";
-                    // ctx.strokeRect(x, y, cardWidth, cardHeight);
-
-                    // 2. Draw Top Color Bar
-                    ctx.fillStyle = rankColor;
-                    ctx.fillRect(x, y, cardWidth, 10);
-
-                    // 3. Draw Rank #
-                    ctx.fillStyle = "#333333";
-                    ctx.font = "bold 20px sans-serif";
-                    ctx.textAlign = "center";
-                    ctx.fillText("#" + rank, x + cardWidth/2, y + 40);
-
-                    // 4. Draw Image (Scaled to fit 140px height max)
-                    var imgH = 150;
-                    var imgW = cardWidth - 20;
-                    // Maintain aspect ratio
-                    var scale = Math.min(imgW / img.width, imgH / img.height);
-                    var drawW = img.width * scale;
-                    var drawH = img.height * scale;
-                    var drawX = x + (cardWidth - drawW) / 2;
-                    var drawY = y + 55 + (imgH - drawH) / 2; // Center in the image area
-
-                    ctx.drawImage(img, drawX, drawY, drawW, drawH);
-
-                    // 5. Draw Team Name
-                    ctx.fillStyle = "#000000";
-                    ctx.font = "bold 14px sans-serif";
-                    ctx.fillText(teamName, x + cardWidth/2, y + 225);
-
-                    // 6. Draw Kit Name
-                    ctx.fillStyle = "#666666";
-                    ctx.font = "italic 11px sans-serif";
-                    ctx.fillText(kitName, x + cardWidth/2, y + 245);
-                })
-            );
-
-        })(i, ranking);
-
-        // Rank Logic
-        if (i < processedNamMember.length - 1) {
-            if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
-                sameRank++;
-            } else {
-                ranking += sameRank;
-                sameRank = 1;
-            }
-        }
-    }
-
-    // Execute all draws then show result
-    Promise.all(tasks).then(() => {
-        var dataUrl = canvas.toDataURL("image/png");
-        overlay.style.display = 'none';
-        showModal(dataUrl);
-    }).catch(err => {
-        console.error(err);
-        overlay.style.display = 'none';
-        alert("Error generating image.");
-    });
+    // --- 2. GENERATE IMAGE ---
+    generateCanvasPoster();
 }
 
-function showModal(dataUrl) {
-    var modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.zIndex = '100000'; 
-    modal.style.top = '0';
-    modal.style.left = '0';
-    modal.style.width = '100%';
-    modal.style.height = '100%';
-    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
-    modal.style.display = 'flex';
-    modal.style.alignItems = 'center';
-    modal.style.justifyContent = 'center';
-    modal.style.flexDirection = 'column';
-    
-    var img = new Image();
-    img.src = dataUrl;
-    
-    // Fit to screen visually, but source is high-res
-    img.style.maxWidth = '95%';
-    img.style.maxHeight = '80vh'; 
-    img.style.objectFit = 'contain'; 
-    img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
-    img.style.borderRadius = '4px';
 
-    var txt = document.createElement('div');
-    txt.innerHTML = "Right click (or long press) to save.<br>Click anywhere to close.";
-    txt.style.color = "#fff";
-    txt.style.fontFamily = "sans-serif";
-    txt.style.textAlign = "center";
-    txt.style.marginBottom = "15px";
-    txt.style.fontSize = "14px";
-
-    modal.appendChild(txt);
-    modal.appendChild(img);
-    
-    modal.onclick = function() { document.body.removeChild(modal); };
-    document.body.appendChild(modal);
-}
-
-window.onload = function() {
-    prefetchImages();
-    initList();
-    showImage();
-};
-// --- DATABASE SUBMISSION LOGIC ---// 
+// --- DATABASE SUBMISSION LOGIC ---
 async function captureAndSubmitResults(isDebug = false) {
     const today = new Date().toDateString();
-    
-    // Create a unique local storage key for THIS specific template
     const storageKey = 'lastVoteDate_' + CURRENT_TEMPLATE_ID;
 
     // 1. Soft Block (Only apply if it's NOT a debug run)
@@ -494,3 +294,173 @@ async function captureAndSubmitResults(isDebug = false) {
         console.error("Error submitting to database:", err);
     }
 }
+
+
+// --- CANVAS GENERATION ENGINE ---
+function generateCanvasPoster() {
+    var overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+
+    var processedNamMember = namMember.map(item => 
+        item.replace("New England", "N.E.")
+            .replace("Vancouver Whitecaps FC", "Van. Whitecaps")
+    );
+
+    var colors = [
+        "#00ff57", "#3ef846", "#56f034", "#67e91d", "#75e200", "#80da00", "#89d300", 
+        "#91cb00", "#99c300", "#9fbc00", "#a4b400", "#a9ac00", "#aea400", "#b19c00", 
+        "#b49400", "#b78c00", "#b98400", "#bb7b00", "#bc7300", "#bd6a00", "#bd6200", 
+        "#bd5900", "#bc5000", "#bb4700", "#ba3d00", "#b83300", "#b52700", "#b21a00", 
+        "#af0404", "#800000"
+    ];
+
+    var cols = 5;
+    var rows = Math.ceil(processedNamMember.length / cols);
+    var cardWidth = 180;
+    var cardHeight = 260; 
+    var gap = 10;
+    var padding = 20;
+    var headerHeight = 60;
+    
+    var canvasWidth = (cols * cardWidth) + ((cols - 1) * gap) + (padding * 2);
+    var canvasHeight = headerHeight + (rows * cardHeight) + ((rows - 1) * gap) + (padding * 2);
+
+    var canvas = document.createElement('canvas');
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    ctx.fillStyle = "#000000";
+    ctx.font = "32px MLS, sans-serif"; 
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("2026 MLS KIT RANKINGS", canvasWidth / 2, padding + (headerHeight / 2) - 10);
+
+    function loadImage(src) {
+        return new Promise((resolve, reject) => {
+            var img = new Image();
+            img.crossOrigin = "Anonymous"; 
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error("Failed to load " + src));
+            img.src = src;
+        });
+    }
+
+    var tasks = [];
+    var ranking = 1;
+    var sameRank = 1;
+
+    for (var i = 0; i < processedNamMember.length; i++) {
+        (function(index, rank) {
+            var dataRaw = processedNamMember[lstMember[0][index]];
+            var parts = dataRaw.split('|');
+            var imgTag = parts[0];
+            var imgUrl = imgTag.match(/src=['"](.*?)['"]/)[1];
+            var teamName = parts[1].replace(/<\/?b>/g, "");
+            var kitName = parts[2].replace(/<\/?i>/g, "");
+            var rankColor = colors[rank - 1] || "#ccc";
+
+            var col = index % cols;
+            var row = Math.floor(index / cols);
+            
+            var x = padding + (col * (cardWidth + gap));
+            var y = padding + headerHeight + (row * (cardHeight + gap));
+
+            tasks.push(
+                loadImage(imgUrl).then(img => {
+                    ctx.fillStyle = rankColor;
+                    ctx.fillRect(x, y, cardWidth, 10);
+
+                    ctx.fillStyle = "#333333";
+                    ctx.font = "bold 20px sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.fillText("#" + rank, x + cardWidth/2, y + 40);
+
+                    var imgH = 150;
+                    var imgW = cardWidth - 20;
+                    var scale = Math.min(imgW / img.width, imgH / img.height);
+                    var drawW = img.width * scale;
+                    var drawH = img.height * scale;
+                    var drawX = x + (cardWidth - drawW) / 2;
+                    var drawY = y + 55 + (imgH - drawH) / 2; 
+
+                    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+
+                    ctx.fillStyle = "#000000";
+                    ctx.font = "bold 14px sans-serif";
+                    ctx.fillText(teamName, x + cardWidth/2, y + 225);
+
+                    ctx.fillStyle = "#666666";
+                    ctx.font = "italic 11px sans-serif";
+                    ctx.fillText(kitName, x + cardWidth/2, y + 245);
+                })
+            );
+
+        })(i, ranking);
+
+        if (i < processedNamMember.length - 1) {
+            if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
+                sameRank++;
+            } else {
+                ranking += sameRank;
+                sameRank = 1;
+            }
+        }
+    }
+
+    Promise.all(tasks).then(() => {
+        var dataUrl = canvas.toDataURL("image/png");
+        overlay.style.display = 'none';
+        showModal(dataUrl);
+    }).catch(err => {
+        console.error(err);
+        overlay.style.display = 'none';
+        alert("Error generating image.");
+    });
+}
+
+function showModal(dataUrl) {
+    var modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.zIndex = '100000'; 
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.flexDirection = 'column';
+    
+    var img = new Image();
+    img.src = dataUrl;
+    img.style.maxWidth = '95%';
+    img.style.maxHeight = '80vh'; 
+    img.style.objectFit = 'contain'; 
+    img.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
+    img.style.borderRadius = '4px';
+
+    var txt = document.createElement('div');
+    txt.innerHTML = "Right click (or long press) to save.<br>Click anywhere to close.";
+    txt.style.color = "#fff";
+    txt.style.fontFamily = "sans-serif";
+    txt.style.textAlign = "center";
+    txt.style.marginBottom = "15px";
+    txt.style.fontSize = "14px";
+
+    modal.appendChild(txt);
+    modal.appendChild(img);
+    
+    modal.onclick = function() { document.body.removeChild(modal); };
+    document.body.appendChild(modal);
+}
+
+window.onload = function() {
+    prefetchImages();
+    initList();
+    showImage();
+};
