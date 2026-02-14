@@ -176,6 +176,9 @@ function sortList(flag) {
         // Hide Battle UI
         document.getElementById("mainTable").style.display = "none";
         document.getElementById("screenieButton").style.display = "none";
+
+    // ---> FIRE IT OFF TO THE DATABASE <---
+        captureAndSubmitResults();
         
         // Trigger Canvas Generation
         generateCanvasPoster();
@@ -423,3 +426,64 @@ window.onload = function() {
     initList();
     showImage();
 };
+// --- DATABASE SUBMISSION LOGIC ---
+async function captureAndSubmitResults() {
+    // 1. Soft Block (Local Storage Check)
+    const today = new Date().toDateString();
+    if (localStorage.getItem('lastVoteDate') === today) {
+        console.log("User already voted today according to local storage.");
+        return; // Stop here, don't ping the database
+    }
+
+    finalKitRankingsData = []; 
+    var ranking = 1;
+    var sameRank = 1;
+
+    // Loop through the finalized list
+    for (var i = 0; i < namMember.length; i++) {
+        var originalIndex = lstMember[0][i];
+        var dataRaw = namMember[originalIndex];
+        
+        var parts = dataRaw.split('|');
+        var imgTag = parts[0];
+        var imgUrl = imgTag.match(/src=['"](.*?)['"]/)[1];
+        var teamName = parts[1].replace(/<\/?b>/g, "");
+        var kitName = parts[2].replace(/<\/?i>/g, "");
+
+        finalKitRankingsData.push({
+            rank: ranking,
+            team: teamName,
+            kit: kitName,
+            imagePath: imgUrl
+        });
+
+        if (i < namMember.length - 1) {
+            if (equal[lstMember[0][i]] == lstMember[0][i + 1]) {
+                sameRank++;
+            } else {
+                ranking += sameRank;
+                sameRank = 1;
+            }
+        }
+    }
+
+    // 2. Send to Supabase Database via our secure RPC function
+    try {
+        const { data, error } = await supabase.rpc('submit_ranking', {
+            payload: finalKitRankingsData
+        });
+
+        if (error) throw error;
+
+        if (data === 'error_already_voted') {
+            console.log("Database rejected: IP hash already voted today.");
+            // Update local storage so we catch them locally next time
+            localStorage.setItem('lastVoteDate', today); 
+        } else if (data === 'success') {
+            console.log("Successfully logged to database!");
+            localStorage.setItem('lastVoteDate', today); 
+        }
+    } catch (err) {
+        console.error("Error submitting to database:", err);
+    }
+}
