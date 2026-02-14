@@ -8,6 +8,10 @@ const supabaseDb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 // Define what list is currently being ranked
 const CURRENT_TEMPLATE_ID = 'mls_2026'; 
 
+// --- DEBUG TOGGLE ---
+// Change to true to show the button and allow auto-sorting. Change to false for production.
+const ENABLE_DEBUG_MODE = false; 
+
 // Global variable to hold the final data
 var finalKitRankingsData = [];
 
@@ -213,6 +217,8 @@ function showImage() {
 
 // --- DEBUG FUNCTION ---
 function debugAutoSort() {
+    if (!ENABLE_DEBUG_MODE) return; // Failsafe: Stops execution if disabled
+
     console.log("Debug: Force finishing...");
     lstMember[0] = [];
     for (var i = 0; i < namMember.length; i++) {
@@ -273,7 +279,6 @@ async function captureAndSubmitResults(isDebug = false) {
 
     // 2. Send to Supabase Database
     try {
-        // FIX: Using 'supabaseDb' here
         const { data, error } = await supabaseDb.rpc('submit_ranking', {
             p_payload: finalKitRankingsData,
             p_template_id: CURRENT_TEMPLATE_ID,
@@ -458,8 +463,17 @@ function showModal(dataUrl) {
     document.body.appendChild(modal);
 }
 
+// --- INITIALIZATION ---
 window.onload = function() {
     prefetchImages();
     initList();
     showImage();
+
+    // Draw the debug button ONLY if the toggle is true
+    if (ENABLE_DEBUG_MODE) {
+        var debugHtml = '<div style="position:fixed; bottom:20px; right:20px; z-index:999999;">' +
+                        '<button onclick="debugAutoSort()" style="padding:15px; background:red; color:white; border:2px solid white; border-radius:8px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">' +
+                        '⚡ DEBUG</button></div>';
+        document.body.insertAdjacentHTML('beforeend', debugHtml);
+    }
 };
