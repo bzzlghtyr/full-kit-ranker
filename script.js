@@ -1,3 +1,11 @@
+// --- SUPABASE SETUP ---
+const SUPABASE_URL = 'https://vwzibkmtlnqyjrmqvjcp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_rK690mconY77dTIDtxFHcA_S5oLuTAe';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Global variable to hold the final data
+var finalKitRankingsData = [];
+
 var lstMember = new Array();
 var parent = new Array();
 var equal = new Array();
