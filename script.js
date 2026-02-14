@@ -181,7 +181,7 @@ function sortList(flag) {
         document.getElementById("screenieButton").style.display = "none";
 
     // ---> FIRE IT OFF TO THE DATABASE <---
-        captureAndSubmitResults();
+        captureAndSubmitResults(false);
         
         // Trigger Canvas Generation
         generateCanvasPoster();
@@ -429,20 +429,23 @@ window.onload = function() {
     initList();
     showImage();
 };
-// --- DATABASE SUBMISSION LOGIC ---
-async function captureAndSubmitResults() {
-    // 1. Soft Block (Local Storage Check)
+// --- DATABASE SUBMISSION LOGIC ---// 
+async function captureAndSubmitResults(isDebug = false) {
     const today = new Date().toDateString();
-    if (localStorage.getItem('lastVoteDate') === today) {
-        console.log("User already voted today according to local storage.");
-        return; // Stop here, don't ping the database
+    
+    // Create a unique local storage key for THIS specific template
+    const storageKey = 'lastVoteDate_' + CURRENT_TEMPLATE_ID;
+
+    // 1. Soft Block (Only apply if it's NOT a debug run)
+    if (!isDebug && localStorage.getItem(storageKey) === today) {
+        console.log("User already voted on this template today.");
+        return; 
     }
 
     finalKitRankingsData = []; 
     var ranking = 1;
     var sameRank = 1;
 
-    // Loop through the finalized list
     for (var i = 0; i < namMember.length; i++) {
         var originalIndex = lstMember[0][i];
         var dataRaw = namMember[originalIndex];
@@ -470,21 +473,22 @@ async function captureAndSubmitResults() {
         }
     }
 
-    // 2. Send to Supabase Database via our secure RPC function
+    // 2. Send to Supabase Database
     try {
         const { data, error } = await supabase.rpc('submit_ranking', {
-            payload: finalKitRankingsData
+            p_payload: finalKitRankingsData,
+            p_template_id: CURRENT_TEMPLATE_ID,
+            p_is_debug: isDebug
         });
 
         if (error) throw error;
 
         if (data === 'error_already_voted') {
-            console.log("Database rejected: IP hash already voted today.");
-            // Update local storage so we catch them locally next time
-            localStorage.setItem('lastVoteDate', today); 
+            console.log("Database rejected: IP already voted on this template today.");
+            if (!isDebug) localStorage.setItem(storageKey, today); 
         } else if (data === 'success') {
-            console.log("Successfully logged to database!");
-            localStorage.setItem('lastVoteDate', today); 
+            console.log(`Successfully logged to database! (Debug Mode: ${isDebug})`);
+            if (!isDebug) localStorage.setItem(storageKey, today); 
         }
     } catch (err) {
         console.error("Error submitting to database:", err);
